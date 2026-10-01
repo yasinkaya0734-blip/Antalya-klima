@@ -1,0 +1,27 @@
+const fs = require('node:fs');
+const path = 'src/app/[locale]/[[...slug]]/page.tsx';
+let text = fs.readFileSync(path, 'utf8');
+function replace(from, to) { if (!text.includes(from)) throw new Error('Missing integration anchor: ' + from.slice(0, 90)); text = text.replace(from, to); }
+replace("import type { Metadata } from 'next';", "import type { Metadata } from 'next';\nimport { getDistrictService } from '../../district-services';\nimport { resolveErrorPage } from '../../error-code-data';\nimport DistrictServiceContent, { DistrictServiceLinks } from '../../components/DistrictServiceContent';\nimport ErrorCodeContent from '../../components/ErrorCodeContent';");
+replace("  const t = copy[locale];\n  const [section, item] = slug;", "  const t = copy[locale];\n  const districtService = getDistrictService(locale, slug);\n  const errorPage = resolveErrorPage(locale, slug);\n  const [section, item] = slug;");
+replace("  if (!section) title = t.sub;", "  if (districtService) { title = districtService.title; description = districtService.description; }\n  else if (errorPage) { title = errorPage.title; description = errorPage.description; }\n  else if (!section) title = t.sub;");
+replace('return { section, item, neighborhoods,', 'return { districtService, errorPage, section, item, neighborhoods,');
+replace("const isCombination = page.isLanding || (page.section === 'antalya' && Boolean(page.brand));", "const isCombination = (page.isLanding && !page.districtService) || (page.section === 'antalya' && Boolean(page.brand)) || (page.errorPage && !page.errorPage.indexable);\n  const languages = page.errorPage || page.districtService ? { tr: `/tr${path}`, 'x-default': `/tr${path}` } : Object.fromEntries([...locales.map(language => [language, `/${language}${path}`]), ['x-default', `/tr${path}`]]);");
+replace("languages: Object.fromEntries([...locales.map(language => [language, `/${language}${path}`]), ['x-default', `/tr${path}`]])", 'languages');
+replace("alternateLocale: locales.filter(value => value !== locale).map(value => ogLocales[value])", "alternateLocale: page.errorPage || page.districtService ? [] : locales.filter(value => value !== locale).map(value => ogLocales[value])");
+replace("[['hizmetler', t.services], ['ilceler', t.areas], ['markalar', t.brands], ['rehber', t.guides], ['iletisim', t.contact]]", "[['hizmetler', t.services], ['ilceler', t.areas], ['markalar', t.brands], ['rehber', t.guides], ...(locale === 'tr' ? [['klima-ariza-kodlari', 'Arıza Kodları']] : []), ['iletisim', t.contact]]");
+replace('<DistrictCards locale={locale} priority/></div></section>', '<DistrictCards locale={locale} priority/>{locale === \'tr\' && <><h2>İlçenize özel arıza ve bakım servisi</h2><DistrictServiceLinks/></>}</div></section>');
+replace("const errorNote = <><h2>{t.errorHeading}</h2><p>{t.errorNote}</p><p><Link className=\"btn\" href={`/${locale}/rehber/klima-ariza-kodlari-nasil-kontrol-edilir`}>{t.errorGuide}</Link></p></>;", "const errorNote = <><h2>{t.errorHeading}</h2><p>{t.errorNote}</p><p><Link className=\"btn\" href={locale === 'tr' ? `/tr/klima-ariza-kodlari${brand ? '/' + slugify(brand) : ''}` : `/${locale}/rehber/klima-ariza-kodlari-nasil-kontrol-edilir`}>{locale === 'tr' ? `${brand ? brand + ' ' : ''}Klima arıza kodları` : t.errorGuide}</Link></p></>;");
+replace('  if (isLanding) {\n    const relatedIndex', '  if (page.districtService) {\n    content = <DistrictServiceContent page={page.districtService}/>;\n  } else if (page.errorPage) {\n    content = <ErrorCodeContent brand={page.errorPage.brand}/>;\n  } else if (isLanding) {\n    const relatedIndex');
+replace('<h2>{t.services}</h2><ServiceCards locale={locale}/><h2>{t.neighborhoodHeading}</h2>', '<h2>{t.services}</h2>{locale === \'tr\' && <DistrictServiceLinks district={district.slug}/>}<ServiceCards locale={locale}/><h2>{t.neighborhoodHeading}</h2>');
+replace("  const url = base + '/' + locale + '/' + slug.join('/');", "  if (locale === 'tr' && (section === 'hizmetler' || section === 'rehber')) content = <>{content}{section === 'hizmetler' && <><h2>İlçenize göre servis</h2><DistrictServiceLinks/></>}<p><Link className=\"btn\" href=\"/tr/klima-ariza-kodlari\">Markaya göre klima arıza kodları</Link></p></>;\n  const url = base + '/' + locale + '/' + slug.join('/');");
+replace("  if (guide) graph.push(", "  if (page.errorPage) graph.push({ '@type': 'CollectionPage', name: page.title, description: page.description, url, inLanguage: 'tr', dateModified: '2026-09-28', publisher: { '@id': base + '/#business' } });\n  if (guide) graph.push(");
+replace("locale === 'tr' && (district || brand || isLanding)", "locale === 'tr' && !page.districtService && (district || brand || isLanding)");
+fs.writeFileSync(path, text);
+const layout = 'src/app/layout.tsx';
+fs.writeFileSync(layout, fs.readFileSync(layout, 'utf8').replace("import './enhanced.css';", "import './enhanced.css';\nimport './service-guides.css';"));
+const switcher = 'src/app/components/LanguageSwitcher.tsx';
+fs.writeFileSync(switcher, fs.readFileSync(switcher, 'utf8').replace("href={`/${language}${path}`}", "href={`/${language}${path.startsWith('/klima-ariza-kodlari') && language !== 'tr' ? '/rehber/klima-ariza-kodlari-nasil-kontrol-edilir' : path}`}"));
+const proxy = 'src/proxy.ts';
+fs.writeFileSync(proxy, fs.readFileSync(proxy, 'utf8').replace("const legacyRoots = [", "const legacyRoots = ['/klima-ariza-kodlari', "));
+console.log('Integrated district services and error code pages.');

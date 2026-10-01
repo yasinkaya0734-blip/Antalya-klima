@@ -1,0 +1,8 @@
+backups/
+.git/
+.next/
+node_modules/
+*.tsbuildinfo
+*.log
+qa-output/
+.env*

@@ -1,0 +1,363 @@
+{
+  "akseki": {
+    "name": {
+      "tr": "Sarıhacılar Camii",
+      "en": "Sarıhacılar Mosque",
+      "de": "Sarıhacılar-Moschee",
+      "ru": "Мечеть Сарыхаджылар"
+    },
+    "mapQuery": "Sarıhacılar Camii Akseki Antalya",
+    "image": "/districts/akseki.webp",
+    "width": 960,
+    "height": 540,
+    "author": "Basak",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sarihaciar3.jpg",
+    "sourceTitle": "File:Sarihaciar3.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 61356
+  },
+  "aksu": {
+    "name": {
+      "tr": "Perge Antik Kenti",
+      "en": "Ancient city of Perge",
+      "de": "Antike Stadt Perge",
+      "ru": "Древний город Перге"
+    },
+    "mapQuery": "Perge Antik Kenti Aksu Antalya",
+    "image": "/districts/aksu.webp",
+    "width": 960,
+    "height": 640,
+    "author": "Saffron Blaze",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Perge_city_overview.jpg",
+    "sourceTitle": "File:Perge city overview.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 254124
+  },
+  "alanya": {
+    "name": {
+      "tr": "Kızılkule ve Alanya Kalesi",
+      "en": "Red Tower and Alanya Castle",
+      "de": "Roter Turm und Burg von Alanya",
+      "ru": "Красная башня и крепость Аланьи"
+    },
+    "mapQuery": "Kızılkule Alanya Antalya",
+    "image": "/districts/alanya.webp",
+    "width": 960,
+    "height": 709,
+    "author": "Julian Lupyan",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_Tower_(Foreground),_Alanya_Castle_(Background),_Alanya,_T%C3%BCrkiye.jpg",
+    "sourceTitle": "File:Red Tower (Foreground), Alanya Castle (Background), Alanya, Türkiye.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 301112
+  },
+  "demre": {
+    "name": {
+      "tr": "Myra Kaya Mezarları",
+      "en": "Myra Rock Tombs",
+      "de": "Felsengräber von Myra",
+      "ru": "Скальные гробницы Миры"
+    },
+    "mapQuery": "Myra Antik Kenti Demre Antalya",
+    "image": "/districts/demre.webp",
+    "width": 960,
+    "height": 640,
+    "author": "Saffron Blaze",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Myra_Rock_Tombs.jpg",
+    "sourceTitle": "File:Myra Rock Tombs.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 227366
+  },
+  "dosemealti": {
+    "name": {
+      "tr": "Karain Mağarası",
+      "en": "Karain Cave",
+      "de": "Karain-Höhle",
+      "ru": "Пещера Караин"
+    },
+    "mapQuery": "Karain Mağarası Döşemealtı Antalya",
+    "image": "/districts/dosemealti.webp",
+    "width": 960,
+    "height": 639,
+    "author": "Dosseman",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Karain_Ma%C4%9Faras%C4%B1_3782.jpg",
+    "sourceTitle": "File:Karain Mağarası 3782.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 270800
+  },
+  "elmali": {
+    "name": {
+      "tr": "Tarihi Elmalı sokakları",
+      "en": "Historic streets of Elmalı",
+      "de": "Historische Gassen von Elmalı",
+      "ru": "Исторические улицы Элмалы"
+    },
+    "mapQuery": "Elmalı tarihi merkez Antalya",
+    "image": "/districts/elmali.webp",
+    "width": 960,
+    "height": 720,
+    "author": "Elmalili",
+    "license": "CC BY 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:Historic_streets_of_Elmal%C4%B1,_Antalya.jpg",
+    "sourceTitle": "File:Historic streets of Elmalı, Antalya.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 100634
+  },
+  "finike": {
+    "name": {
+      "tr": "Limyra Antik Tiyatrosu",
+      "en": "Ancient theatre of Limyra",
+      "de": "Antikes Theater von Limyra",
+      "ru": "Античный театр Лимиры"
+    },
+    "mapQuery": "Limyra Antik Kenti Finike Antalya",
+    "image": "/districts/finike.webp",
+    "width": 960,
+    "height": 639,
+    "author": "Dosseman",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Limyra_Roman_Theatre_3944.jpg",
+    "sourceTitle": "File:Limyra Roman Theatre 3944.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 242750
+  },
+  "gazipasa": {
+    "name": {
+      "tr": "Antiochia ad Cragum",
+      "en": "Antiochia ad Cragum",
+      "de": "Antiochia ad Cragum",
+      "ru": "Антиохия-ад-Крагум"
+    },
+    "mapQuery": "Antiochia ad Cragum Gazipaşa Antalya",
+    "image": "/districts/gazipasa.webp",
+    "width": 696,
+    "height": 560,
+    "author": "Klaus-Peter Simon",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:AntiochiaCr4.jpg",
+    "sourceTitle": "File:AntiochiaCr4.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 87816
+  },
+  "gundogmus": {
+    "name": {
+      "tr": "Gündoğmuş ilçe manzarası",
+      "en": "View of Gündoğmuş",
+      "de": "Blick auf Gündoğmuş",
+      "ru": "Вид на Гюндогмуш"
+    },
+    "mapQuery": "Gündoğmuş ilçe merkezi Antalya",
+    "image": "/districts/gundogmus.webp",
+    "width": 960,
+    "height": 720,
+    "author": "Stegop",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Gundogmus-42-1.jpg",
+    "sourceTitle": "File:Gundogmus-42-1.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 204958
+  },
+  "ibradi": {
+    "name": {
+      "tr": "Altınbeşik Mağarası",
+      "en": "Altınbeşik Cave",
+      "de": "Altınbeşik-Höhle",
+      "ru": "Пещера Алтынбешик"
+    },
+    "mapQuery": "Altınbeşik Mağarası İbradı Antalya",
+    "image": "/districts/ibradi.webp",
+    "width": 960,
+    "height": 615,
+    "author": "Damira Fedorova",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Alt%C4%B1nbe%C5%9Fik_Cave_National_Park.jpg",
+    "sourceTitle": "File:Altınbeşik Cave National Park.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 138478
+  },
+  "kas": {
+    "name": {
+      "tr": "Kaputaş Plajı",
+      "en": "Kaputaş Beach",
+      "de": "Kaputaş-Strand",
+      "ru": "Пляж Капуташ"
+    },
+    "mapQuery": "Kaputaş Plajı Kaş Antalya",
+    "image": "/districts/kas.webp",
+    "width": 960,
+    "height": 720,
+    "author": "Tbakky",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Turkiye_Antalya_Kaputa%C5%9F_Plaj%C4%B1.jpg",
+    "sourceTitle": "File:Turkiye Antalya Kaputaş Plajı.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 176774
+  },
+  "kemer": {
+    "name": {
+      "tr": "Phaselis Antik Kenti",
+      "en": "Ancient city of Phaselis",
+      "de": "Antike Stadt Phaselis",
+      "ru": "Древний город Фазелис"
+    },
+    "mapQuery": "Phaselis Antik Kenti Kemer Antalya",
+    "image": "/districts/kemer.webp",
+    "width": 859,
+    "height": 588,
+    "author": "Alexander Buschorn at de.wikipedia",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Phaselis_axb01.jpg",
+    "sourceTitle": "File:Phaselis axb01.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 171540
+  },
+  "kepez": {
+    "name": {
+      "tr": "Yukarı Düden Şelalesi",
+      "en": "Upper Düden Waterfall",
+      "de": "Oberer Düden-Wasserfall",
+      "ru": "Верхний Дюденский водопад"
+    },
+    "mapQuery": "Yukarı Düden Şelalesi Kepez Antalya",
+    "image": "/districts/kepez.webp",
+    "width": 960,
+    "height": 1344,
+    "author": "Saffron Blaze",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Upper_Duden_Falls.jpg",
+    "sourceTitle": "File:Upper Duden Falls.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 448930
+  },
+  "konyaalti": {
+    "name": {
+      "tr": "Konyaaltı sahili",
+      "en": "Konyaaltı coast",
+      "de": "Küste von Konyaaltı",
+      "ru": "Побережье Коньяалты"
+    },
+    "mapQuery": "Konyaaltı Plajı Antalya",
+    "image": "/districts/konyaalti.webp",
+    "width": 960,
+    "height": 540,
+    "author": "Esginmurat",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Falezlerden_Antalya_Konyaalt%C4%B1_Plaj%C4%B1na_do%C4%9Fru_bir_g%C3%B6r%C3%BCn%C3%BCm.jpg",
+    "sourceTitle": "File:Falezlerden Antalya Konyaaltı Plajına doğru bir görünüm.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 110604
+  },
+  "korkuteli": {
+    "name": {
+      "tr": "Korkuteli tarihi medresesi",
+      "en": "Historic madrasa of Korkuteli",
+      "de": "Historische Medrese in Korkuteli",
+      "ru": "Историческое медресе Коркутели"
+    },
+    "mapQuery": "Sinaneddin Medresesi Korkuteli Antalya",
+    "image": "/districts/korkuteli.webp",
+    "width": 960,
+    "height": 640,
+    "author": "Christian1311",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Korkuteli;_Alaaddin_Keykubat_Medresesi.jpg",
+    "sourceTitle": "File:Korkuteli; Alaaddin Keykubat Medresesi.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 89270
+  },
+  "kumluca": {
+    "name": {
+      "tr": "Olympos Antik Kenti ve sahili",
+      "en": "Ancient Olympos and its coast",
+      "de": "Antikes Olympos und seine Küste",
+      "ru": "Древний Олимпос и побережье"
+    },
+    "mapQuery": "Olympos Antik Kenti Kumluca Antalya",
+    "image": "/districts/kumluca.webp",
+    "width": 960,
+    "height": 540,
+    "author": "Seckinevcim",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aerial_View_of_Olympus_(Lycia)_from_the_west.jpg",
+    "sourceTitle": "File:Aerial View of Olympus (Lycia) from the west.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 195258
+  },
+  "manavgat": {
+    "name": {
+      "tr": "Manavgat Şelalesi",
+      "en": "Manavgat Waterfall",
+      "de": "Manavgat-Wasserfall",
+      "ru": "Манавгатский водопад"
+    },
+    "mapQuery": "Manavgat Şelalesi Antalya",
+    "image": "/districts/manavgat.webp",
+    "width": 960,
+    "height": 541,
+    "author": "Spiritia",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Manavgat_River_5.jpg",
+    "sourceTitle": "File:Manavgat River 5.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 180278
+  },
+  "muratpasa": {
+    "name": {
+      "tr": "Hadrian Kapısı (Üçkapılar)",
+      "en": "Hadrian’s Gate",
+      "de": "Hadrianstor",
+      "ru": "Ворота Адриана"
+    },
+    "mapQuery": "Hadrian Kapısı Muratpaşa Antalya",
+    "image": "/districts/muratpasa.webp",
+    "width": 960,
+    "height": 720,
+    "author": "Joe Wallace",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:P9271452_Hadrians_Gate.jpg",
+    "sourceTitle": "File:P9271452 Hadrians Gate.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 270762
+  },
+  "serik": {
+    "name": {
+      "tr": "Aspendos Antik Tiyatrosu",
+      "en": "Ancient theatre of Aspendos",
+      "de": "Antikes Theater von Aspendos",
+      "ru": "Античный театр Аспендоса"
+    },
+    "mapQuery": "Aspendos Antik Tiyatrosu Serik Antalya",
+    "image": "/districts/serik.webp",
+    "width": 960,
+    "height": 720,
+    "author": "Lee Vilenski",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aspendos_Theatre,_Turkey.jpg",
+    "sourceTitle": "File:Aspendos Theatre, Turkey.jpg",
+    "downloadedAt": "2026-09-09",
+    "bytes": 194992
+  }
+}

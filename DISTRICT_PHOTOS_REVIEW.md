@@ -1,0 +1,34 @@
+# İlçe fotoğrafları — 9 Eylül 2026
+
+19 ilçe için gerçek fotoğraf, yer adı, harita arama bağlantısı ve kaynak/lisans açıklaması eklendi. Dört dilde yalnızca Hizmet Bölgeleri liste sayfasındaki ilçe kartları görselleştirildi. İlçe hizmet bağlantıları korunuyor. Harita bağlantıları şube adresi olarak sunulmuyor.
+
+Fotoğraflar WebP olarak yerelden sunuluyor; Next Image boyuta göre optimize ediyor ve lazy loading uygulanıyor. 19 adet 384px WebP yanıtının toplamı 470.224 bayt. Masaüstü ve 390px mobil görünüm incelendi. Dört dilde 19 kart, yer adı, ilçe bağlantısı, harita sorgusu ve lisans kontrolü başarılı. Derleme ve ESLint başarılı.
+
+Bazı ilçelerde tarihi sokak veya ilçe panoraması tercih edildi. Bunlar en güzel yer sıralaması değildir. Harita sorguları yer adlarına dayanır; fotoğraf dosyasındaki GPS verileri bazen yanlış olduğundan otomatik aktarılmadı.
+
+## Fotoğraf kaynakları
+
+- **akseki: Sarıhacılar Camii** — Basak; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Sarihaciar3.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **aksu: Perge Antik Kenti** — Saffron Blaze; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Perge_city_overview.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **alanya: Kızılkule ve Alanya Kalesi** — Julian Lupyan; [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Red_Tower_(Foreground),_Alanya_Castle_(Background),_Alanya,_T%C3%BCrkiye.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **demre: Myra Kaya Mezarları** — Saffron Blaze; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Myra_Rock_Tombs.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **dosemealti: Karain Mağarası** — Dosseman; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Karain_Ma%C4%9Faras%C4%B1_3782.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **elmali: Tarihi Elmalı sokakları** — Elmalili; [CC BY 2.5](https://creativecommons.org/licenses/by/2.5); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Historic_streets_of_Elmal%C4%B1,_Antalya.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **finike: Limyra Antik Tiyatrosu** — Dosseman; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Limyra_Roman_Theatre_3944.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **gazipasa: Antiochia ad Cragum** — Klaus-Peter Simon; [CC BY 3.0](https://creativecommons.org/licenses/by/3.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:AntiochiaCr4.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **gundogmus: Gündoğmuş ilçe manzarası** — Stegop; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Gundogmus-42-1.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **ibradi: Altınbeşik Mağarası** — Damira Fedorova; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Alt%C4%B1nbe%C5%9Fik_Cave_National_Park.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **kas: Kaputaş Plajı** — Tbakky; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Turkiye_Antalya_Kaputa%C5%9F_Plaj%C4%B1.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **kemer: Phaselis Antik Kenti** — Alexander Buschorn at de.wikipedia; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Phaselis_axb01.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **kepez: Yukarı Düden Şelalesi** — Saffron Blaze; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Upper_Duden_Falls.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **konyaalti: Konyaaltı sahili** — Esginmurat; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Falezlerden_Antalya_Konyaalt%C4%B1_Plaj%C4%B1na_do%C4%9Fru_bir_g%C3%B6r%C3%BCn%C3%BCm.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **korkuteli: Korkuteli tarihi medresesi** — Christian1311; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Korkuteli;_Alaaddin_Keykubat_Medresesi.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **kumluca: Olympos Antik Kenti ve sahili** — Seckinevcim; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Aerial_View_of_Olympus_(Lycia)_from_the_west.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **manavgat: Manavgat Şelalesi** — Spiritia; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Manavgat_River_5.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **muratpasa: Hadrian Kapısı (Üçkapılar)** — Joe Wallace; [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:P9271452_Hadrians_Gate.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+- **serik: Aspendos Antik Tiyatrosu** — Lee Vilenski; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0); [orijinal fotoğraf](https://commons.wikimedia.org/wiki/File:Aspendos_Theatre,_Turkey.jpg). Web için yeniden boyutlandırıldı ve WebP biçimine çevrildi; kartta kırpılarak gösterilebilir.
+
+## Rehberler
+
+- https://developers.google.com/search/docs/appearance/google-images
+- https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia

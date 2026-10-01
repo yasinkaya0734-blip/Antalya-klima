@@ -1,0 +1,25 @@
+const fs=require('fs'); const sharp=require('sharp');
+const selections={
+ akseki:['File:Sarihaciar3.jpg','Sarıhacılar Camii','Sarıhacılar Mosque','Sarıhacılar-Moschee','Мечеть Сарыхаджылар','Sarıhacılar Camii Akseki Antalya'],
+ aksu:['File:Perge city overview.jpg','Perge Antik Kenti','Ancient city of Perge','Antike Stadt Perge','Древний город Перге','Perge Antik Kenti Aksu Antalya'],
+ alanya:['File:Red Tower (Foreground), Alanya Castle (Background), Alanya, Türkiye.jpg','Kızılkule ve Alanya Kalesi','Red Tower and Alanya Castle','Roter Turm und Burg von Alanya','Красная башня и крепость Аланьи','Kızılkule Alanya Antalya'],
+ demre:['File:Myra Rock Tombs.jpg','Myra Kaya Mezarları','Myra Rock Tombs','Felsengräber von Myra','Скальные гробницы Миры','Myra Antik Kenti Demre Antalya'],
+ dosemealti:['File:Karain Mağarası 3782.jpg','Karain Mağarası','Karain Cave','Karain-Höhle','Пещера Караин','Karain Mağarası Döşemealtı Antalya'],
+ elmali:['File:Historic streets of Elmalı, Antalya.jpg','Tarihi Elmalı sokakları','Historic streets of Elmalı','Historische Gassen von Elmalı','Исторические улицы Элмалы','Elmalı tarihi merkez Antalya'],
+ finike:['File:Limyra Roman Theatre 3944.jpg','Limyra Antik Tiyatrosu','Ancient theatre of Limyra','Antikes Theater von Limyra','Античный театр Лимиры','Limyra Antik Kenti Finike Antalya'],
+ gazipasa:['File:AntiochiaCr4.jpg','Antiochia ad Cragum','Antiochia ad Cragum','Antiochia ad Cragum','Антиохия-ад-Крагум','Antiochia ad Cragum Gazipaşa Antalya'],
+ gundogmus:['File:Gundogmus-42-1.jpg','Gündoğmuş ilçe manzarası','View of Gündoğmuş','Blick auf Gündoğmuş','Вид на Гюндогмуш','Gündoğmuş ilçe merkezi Antalya'],
+ ibradi:['File:Altınbeşik Cave National Park.jpg','Altınbeşik Mağarası','Altınbeşik Cave','Altınbeşik-Höhle','Пещера Алтынбешик','Altınbeşik Mağarası İbradı Antalya'],
+ kas:['File:Turkiye Antalya Kaputaş Plajı.jpg','Kaputaş Plajı','Kaputaş Beach','Kaputaş-Strand','Пляж Капуташ','Kaputaş Plajı Kaş Antalya'],
+ kemer:['File:Phaselis axb01.jpg','Phaselis Antik Kenti','Ancient city of Phaselis','Antike Stadt Phaselis','Древний город Фазелис','Phaselis Antik Kenti Kemer Antalya'],
+ kepez:['File:Upper Duden Falls.jpg','Yukarı Düden Şelalesi','Upper Düden Waterfall','Oberer Düden-Wasserfall','Верхний Дюденский водопад','Yukarı Düden Şelalesi Kepez Antalya'],
+ konyaalti:['File:Falezlerden Antalya Konyaaltı Plajına doğru bir görünüm.jpg','Konyaaltı sahili','Konyaaltı coast','Küste von Konyaaltı','Побережье Коньяалты','Konyaaltı Plajı Antalya'],
+ korkuteli:['File:Korkuteli; Alaaddin Keykubat Medresesi.jpg','Korkuteli tarihi medresesi','Historic madrasa of Korkuteli','Historische Medrese in Korkuteli','Историческое медресе Коркутели','Sinaneddin Medresesi Korkuteli Antalya'],
+ kumluca:['File:Aerial View of Olympus (Lycia) from the west.jpg','Olympos Antik Kenti ve sahili','Ancient Olympos and its coast','Antikes Olympos und seine Küste','Древний Олимпос и побережье','Olympos Antik Kenti Kumluca Antalya'],
+ manavgat:['File:Manavgat River 5.jpg','Manavgat Şelalesi','Manavgat Waterfall','Manavgat-Wasserfall','Манавгатский водопад','Manavgat Şelalesi Antalya'],
+ muratpasa:['File:P9271452 Hadrians Gate.jpg','Hadrian Kapısı (Üçkapılar)','Hadrian’s Gate','Hadrianstor','Ворота Адриана','Hadrian Kapısı Muratpaşa Antalya'],
+ serik:['File:Aspendos Theatre, Turkey.jpg','Aspendos Antik Tiyatrosu','Ancient theatre of Aspendos','Antikes Theater von Aspendos','Античный театр Аспендоса','Aspendos Antik Tiyatrosu Serik Antalya']
+};
+const all=['selected-photo-metadata','elmali-photo-candidates','alanya-photo-candidates','korkuteli-photo-candidates','serik-photo-candidates'].flatMap(f=>Object.values(JSON.parse(fs.readFileSync(`backups/${f}.json`))));
+function plain(s){return s.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').trim();}
+(async()=>{fs.mkdirSync('public/districts',{recursive:true});const out={};for(const [slug,[title,tr,en,de,ru,mapQuery]] of Object.entries(selections)){const p=all.find(p=>p.title===title);if(!p?.imageinfo)throw Error(title);const i=p.imageinfo[0],m=i.extmetadata;const license=m.LicenseShortName?.value;if(!/^(CC BY|CC0)/.test(license??''))throw Error('Unsupported license '+title);const url=new URL(i.thumburl??i.url);url.search='';const target=`public/districts/${slug}.webp`;if(!fs.existsSync(target)){const r=await fetch(url);if(!r.ok)throw Error(slug+' download '+r.status);await sharp(Buffer.from(await r.arrayBuffer())).rotate().resize({width:960,withoutEnlargement:true}).webp({quality:80}).toFile(target);}const dimensions=await sharp(target).metadata();out[slug]={name:{tr,en,de,ru},mapQuery,image:`/districts/${slug}.webp`,width:dimensions.width,height:dimensions.height,author:plain(m.Artist.value),license,licenseUrl:m.LicenseUrl.value.replace(/^http:/,'https:'),source:i.descriptionurl,sourceTitle:title,downloadedAt:'2026-09-09',bytes:fs.statSync(target).size};console.log(slug,dimensions.width,dimensions.height,out[slug].bytes);fs.writeFileSync('src/data/district-landmarks.json',JSON.stringify(out,null,2));} })().catch(e=>{console.error(e);process.exitCode=1});
