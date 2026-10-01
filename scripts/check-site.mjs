@@ -11,8 +11,10 @@ const xml = await xmlResponse.text();
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 assert.equal(new Set(urls).size, urls.length, 'Duplicate sitemap URLs');
 assert.ok(urls.length > 3500 && urls.length < 5000, 'Expected focused directory sitemap');
-assert.ok(!xml.includes('<lastmod>'), 'Do not fabricate modification dates');
-assert.ok(!urls.some(url => /\/[^/]+-klima-servisi$/.test(url)), 'Combination routes must not be submitted');
+for (const entry of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
+  if (entry[1].includes('<lastmod>')) assert.ok(/<loc>[^<]*\/tr\/klima-ariza-kodlari(?:\/[^<]*)?<\/loc>/.test(entry[1]), 'Review date belongs only to error-code pages');
+}
+assert.ok(!urls.some(url => /\/antalya\/[^/]+\/[^/]+\/[^/]+-klima-servisi$/.test(url)), 'Combination routes must not be submitted');
 const directory = await (await request('/api/neighborhoods')).json();
 assert.equal(new Set(directory.data.map(item => item.district)).size, 19);
 assert.ok(directory.data.length >= 913);

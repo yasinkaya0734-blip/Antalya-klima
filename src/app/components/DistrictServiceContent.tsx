@@ -21,7 +21,7 @@ export default function DistrictServiceContent({ page }: { page: DistrictService
   ];
   return <>
     <p className="lead">{page.description}</p><p>{page.intro}</p>
-    <Image className="guide-feature-image" src={page.maintenance ? '/klima-bakim.png' : '/klima-ariza-tamir.png'} alt={`${page.name} için ${page.maintenance ? 'klima bakım ve temizlik' : 'klima arıza tespit'} hizmeti`} width={920} height={518} sizes="(max-width: 760px) 100vw, 920px"/>
+    <Image className="guide-feature-image" src={page.maintenance ? '/klima-bakim.webp' : '/klima-ariza-tamir.webp'} alt={`${page.name} için ${page.maintenance ? 'klima bakım ve temizlik' : 'klima arıza tespit'} hizmeti`} width={920} height={518} sizes="(max-width: 760px) 100vw, 920px"/>
     <h2>{page.maintenance ? 'Bakımda hangi işlemler değerlendirilir?' : 'Arıza tespiti ve onarım nasıl ilerler?'}</h2>
     <ol className="service-checklist">{tasks.map(task => <li key={task}>{task}</li>)}</ol>
     <h2>{page.name} servis bölgesi ve randevu hazırlığı</h2><p>{page.areas.join(', ')} ve ilçedeki diğer mahalleler için adresinizi paylaşarak servis uygunluğunu öğrenebilirsiniz.</p><p>{page.planning}</p>

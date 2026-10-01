@@ -23,6 +23,6 @@ export const businessSchema = {
   name: business.name, legalName: business.name, url: business.url, telephone: business.telephone,
   areaServed: { '@type': 'AdministrativeArea', name: 'Antalya', containedInPlace: { '@type': 'Country', name: 'Türkiye' } },
   openingHoursSpecification: openingHours.map(hours => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: hours.days.map(day => `https://schema.org/${day}`), opens: hours.opens, closes: hours.closes })),
-  image: `${business.url}/klima-salon-hero.png`, logo: `${business.url}/antalyaklimaservisi-logo.png`,
+  image: `${business.url}/klima-salon-hero.webp`, logo: `${business.url}/antalyaklimaservisi-logo.webp`,
   address: { '@type': 'PostalAddress', streetAddress: business.streetAddress, addressLocality: business.addressLocality, addressRegion: business.addressRegion, addressCountry: business.addressCountry, postalCode: business.postalCode },
 };

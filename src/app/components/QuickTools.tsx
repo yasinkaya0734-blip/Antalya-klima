@@ -20,6 +20,7 @@ export default function QuickTools({ locale = 'tr' }: { locale?: Locale }) {
   const availableNeighborhoods = useMemo(() => allNeighborhoods.filter(item => item.district === district), [allNeighborhoods, district]);
 
   useEffect(() => {
+    if (!searchOpen || allNeighborhoods !== neighborhoods) return;
     fetch('/api/neighborhoods')
       .then(response => response.ok ? response.json() : Promise.reject(new Error('Mahalle listesi alınamadı.')))
       .then(result => {
@@ -30,7 +31,7 @@ export default function QuickTools({ locale = 'tr' }: { locale?: Locale }) {
         if (normalized.length) setAllNeighborhoods(normalized);
       })
       .catch(() => setAllNeighborhoods(neighborhoods));
-  }, []);
+  }, [searchOpen, allNeighborhoods]);
 
   useEffect(() => {
     if (!searchOpen && !assistantOpen) return;
@@ -55,11 +56,11 @@ export default function QuickTools({ locale = 'tr' }: { locale?: Locale }) {
 
   const goToResult = () => {
     if (!district) return;
-    const selectedNeighborhood = availableNeighborhoods.find(item => item.slug === neighborhood)?.name;
+    const selectedNeighborhood = availableNeighborhoods.find(item => item.slug === neighborhood);
     const query = new URLSearchParams();
-    if (selectedNeighborhood) query.set('mahalle', selectedNeighborhood);
     if (brand) query.set('marka', brand);
-    const path = `/${locale}/ilceler/${district}${query.size ? `?${query.toString()}` : ''}`;
+    const pagePath = selectedNeighborhood ? `/${locale}/antalya/${district}/${selectedNeighborhood.slug}` : `/${locale}/ilceler/${district}`;
+    const path = `${pagePath}${query.size ? `?${query.toString()}` : ''}`;
     setSearchOpen(false);
     router.push(path);
   };

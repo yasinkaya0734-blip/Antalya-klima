@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
   return [...existing, ...editorialPaths.map(path => ({
     url: `${base}/tr${path}`,
-    lastModified: errorCodeReviewDate,
+    ...(path.startsWith('/klima-ariza-kodlari') ? { lastModified: errorCodeReviewDate } : {}),
     alternates: { languages: { tr: `${base}/tr${path}`, 'x-default': `${base}/tr${path}` } },
   }))];
 }

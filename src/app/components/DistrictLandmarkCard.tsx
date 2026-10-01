@@ -23,8 +23,8 @@ export default function DistrictLandmarkCard({ locale, district }: { locale: Loc
   <div className="landmark-body">
    <p className="landmark-name">{photo.name[locale]}</p>
    <p>{copy[locale].areaIntro}</p>
-   <a className="landmark-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(photo.mapQuery)}`} target="_blank" rel="noopener noreferrer">{t.map} ↗</a>
-   <details className="landmark-credit"><summary>{t.source}</summary><p>{photo.author} · <a href={photo.licenseUrl} target="_blank" rel="noopener noreferrer">{photo.license}</a></p><p><a href={photo.source} target="_blank" rel="noopener noreferrer">{photo.sourceTitle.replace(/^File:/, '')} — Wikimedia Commons</a></p><p>{t.modified}</p></details>
+   <p className="landmark-location">{t.map}: {photo.mapQuery}</p>
+   <details className="landmark-credit"><summary>{t.source}</summary><p>{photo.author} · {photo.license}</p><p>{photo.sourceTitle.replace(/^File:/, '')} — Wikimedia Commons</p><p>{photo.source}</p><p>{photo.licenseUrl}</p><p>{t.modified}</p></details>
   </div>
  </article>;
 }
