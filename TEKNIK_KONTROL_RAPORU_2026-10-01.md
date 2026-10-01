@@ -28,7 +28,7 @@ Mevcut sayfalar korundu; yeni sayfa oluşturulmadı. Teknik değişiklikler Verc
 - İlçe → mahalle → marka araması doğru mahalle ve form bilgilerine ulaştı.
 - Son Lighthouse mobil laboratuvar ölçümü: performans 64/100, LCP 3,2 saniye, toplam engelleme süresi 1.000 ms. Araç bilgisayarın beklenenden yavaş olduğunu bildirdi. Bu sonuç saha ölçümü değildir; performans iyileştirmesi için alan kalıyor.
 - Vercel üretim yayını başarılı. Alan adları doğrulanmış; mevcut ana alan adı yönlendirmeleri korundu. Uygulama ek ortam değişkeni gerektirmiyor.
-- GitHub yüklemesi tamamlanmadı: önceki denemelerde yazma izni reddedildi; son iki denemede GitHub adresi çözümlenemedi. Bu son hata anahtarın yazma izninin düzeldiğini doğrulamıyor. Kod yerel Git kayıtlarında korunuyor.
+- GitHub aktarımı sonraki denemede tamamlandı; uzak ana dal ile yerel sürüm eşleşmesi doğrulandı. Bu GitHub kaydı için Vercel üretim yayını da READY durumunda doğrulandı.
 
 Tam taramanın sayısal sonucu yanındaki teknik tarama raporunda bulunur.
 ## Tam canlı tarama sonucu
@@ -39,3 +39,11 @@ Tam taramanın sayısal sonucu yanındaki teknik tarama raporunda bulunur.
 - Yinelenen sayfa başlığı yok. Her dilde hizmetler, markalar ve ilçeler liste sayfaları aynı meta açıklamayı paylaşıyor: dört tekrar grubu. Sonraki içerik adımı için işaretlendi.
 - Normalleştirilmiş içerik karşılaştırmasında yedi benzerlik grubu bulundu; benzerlik değerlendirmesi editoryal incelemenin yerine geçmez.
 - Ayrıntılar: qa-output/technical-seo-live.json ve qa-output/technical-seo-live-inventory.json.
+## Yeniden kontrol ve düzenlenen sayfa kapsamı
+- Bu yeniden kontrol turunda yeni sayfa oluşturulmadı ve sayfa metinleri yeniden yazılmadı: 0 yeni içerik düzenlemesi.
+- Önceki dış bağlantı temizliği doğrudan 9 sayfada uygulandı: dört dilde ilçe liste sayfası, dört dilde iletişim sayfası ve Türkçe Copa marka sayfası. 19 fotoğraf kartı dört dilde gösteriliyor; kart sayısı sayfa sayısı değildir.
+- Ortak gezinme, arama ve teknik SEO bileşenlerindeki değişiklikler site genelini etkiler; kontrol edilen 3.933 URL'nin her birini ayrı yazılmış içerik olarak saymıyoruz.
+- Kalan içerik işleri: 875 mahalle/bölge için editoryal inceleme ve özgünleştirme; 12 liste sayfasında dört dil grubuna dağılan tekrarlı meta açıklamalar.
+- Kalan performans işi: laboratuvar ölçümündeki LCP ve ana iş parçacığı engelleme süresinin iyileştirilmesi. Mevcut ölçüm cihaz uyarısı içerir.
+- Yeni işlem öncesi yedek: antalyaklimaservisi_2026-10-01_13-20-32.zip. Arşivdeki 136 giriş okunarak doğrulandı; yerel ortam dosyaları ve erişim anahtarları yedek dışında tutuldu.
+- Yeniden tarama 1 Ekim 2026 saat 13:25'te tamamlandı: 3.933 URL, 3.977 iç bağlantı, 0 teknik hata; robots, sitemap, canonical, yedi yönlendirme ve altı gerçek 404 kontrolü geçti.
