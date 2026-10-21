@@ -27,10 +27,9 @@ address { font-style: normal; }
 .language-bar a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: var(--muted); font-size: .875rem; font-weight: 800; }
 .language-bar a:hover { color: var(--blue); }
 
-.brand-logo { align-items: center; display: flex; gap: 12px; height: 74px; width: auto; }
-.brand-mark { display: block; flex: 0 0 112px; height: 74px; overflow: hidden; width: 112px; }
-.brand-logo img { display: block; height: 112px; transform: translateY(-12px); width: 112px; }
-.brand-site-name { color: var(--navy); font-size: 1.12rem; font-weight: 900; letter-spacing: -.03em; line-height: 1.05; text-transform: uppercase; white-space: nowrap; }
+.brand-logo { align-items: center; display: flex; flex: 0 0 350px; height: 120px; overflow: hidden; width: 350px; }
+.brand-mark { display: block; flex: 0 0 350px; height: 120px; overflow: hidden; width: 350px; }
+.brand-logo img { display: block; height: auto; transform: translateY(-38px); width: 350px; }
 
 .service-checklist { display: grid; gap: 11px; margin: 18px 0 34px; padding: 0; list-style: none; }
 .service-checklist li { position: relative; padding: 13px 16px 13px 45px; border: 1px solid var(--line); border-radius: 10px; background: #f8fbfd; color: var(--navy); font-weight: 800; }
@@ -62,8 +61,6 @@ address { font-style: normal; }
 .faq p { margin: 0 0 14px; color: var(--muted); }
 
 .language-bar a[aria-current="page"] { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
-.brand-site-name { white-space: normal; max-width: 240px; overflow-wrap: anywhere; }
-.brand-logo { min-width: 0; height: auto; }
 .nav { flex-wrap: wrap; }
 .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .card, .article h1, .cta, .tool-panel { overflow-wrap: anywhere; }
@@ -74,7 +71,8 @@ address { font-style: normal; }
 @media (max-width: 760px) {
   .grid { grid-template-columns: minmax(0, 1fr); }
   .header .wrap { align-items: flex-start; flex-direction: column; gap: 10px; }
-  .brand-site-name { font-size: 1rem; }
+  .brand-logo, .brand-mark { flex-basis: 240px; height: 86px; width: 240px; }
+  .brand-logo img { transform: translateY(-24px); width: 240px; }
   .nav { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: .86rem; }
   .quick-tools { right: 12px; bottom: 12px; display: flex; gap: 6px; }
   .quick-tool { display: grid; place-items: center; width: 46px; height: 46px; padding: 0; font-size: 1.25rem; }

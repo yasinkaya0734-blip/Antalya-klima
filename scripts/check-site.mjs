@@ -10,7 +10,7 @@ assert.equal(xmlResponse.status, 200);
 const xml = await xmlResponse.text();
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
 assert.equal(new Set(urls).size, urls.length, 'Duplicate sitemap URLs');
-assert.ok(urls.length > 3500 && urls.length < 5000, 'Expected focused directory sitemap');
+assert.ok(urls.length >= 700 && urls.length < 900, 'Expected focused directory sitemap');
 for (const entry of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
   if (entry[1].includes('<lastmod>')) assert.ok(/<loc>[^<]*\/tr\/klima-ariza-kodlari(?:\/[^<]*)?<\/loc>/.test(entry[1]), 'Review date belongs only to error-code pages');
 }
@@ -66,7 +66,7 @@ for (const [path, location] of [['/hizmetler', '/tr/hizmetler'], ['/rehber', '/t
   const response = await request(path, { redirect: 'manual' });
   if (response.status !== 308 || new URL(response.headers.get('location'), origin).pathname !== location) failures.push({ path, message: 'Legacy redirect incorrect' });
 }
-const imageResponse = await request('/_next/image?url=%2Fklima-bakim.png&w=384&q=75', { headers: { Accept: 'image/webp' } });
+const imageResponse = await request('/_next/image?url=%2Fklima-bakim.webp&w=384&q=75', { headers: { Accept: 'image/webp' } });
 const imageBytes = (await imageResponse.arrayBuffer()).byteLength;
 if (imageResponse.status !== 200 || imageBytes >= 150000) failures.push({ message: `Image optimization failed: ${imageResponse.status}, ${imageBytes} bytes` });
 const report = { checked, sitemapUrls: urls.length, neighborhoods: directory.data.length, districts: 19, optimizedImageBytes: imageBytes, failures, completedAt: new Date().toISOString() };

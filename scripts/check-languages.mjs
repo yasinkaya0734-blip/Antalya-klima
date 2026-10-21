@@ -8,7 +8,7 @@ const origin = process.argv[2] ?? 'http://localhost:3100';
 function data(file) {
   const source = fs.readFileSync(new URL(`../src/app/${file}`, import.meta.url), 'utf8');
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-  const context = { exports: {} };
+  const context = { exports: {}, require: id => id === './site-data' ? data('site-data.ts') : (() => { throw new Error(`Unexpected source dependency: ${id}`); })() };
   vm.runInNewContext(compiled, context);
   return context.exports;
 }
@@ -16,6 +16,7 @@ const { copy, locales } = data('i18n.ts');
 const { guides } = data('guide-data.ts');
 const { business } = data('business.ts');
 const { allDistricts, brands, services, slugify } = data('site-data.ts');
+const { featuredNeighborhoods } = data('featured-neighborhoods.ts');
 const decode = value => value.replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16))).replace(/&#(\d+);/g, (_, number) => String.fromCodePoint(Number(number))).replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 const visible = html => decode(html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' '));
 const paths = ['', '/hizmetler', '/ilceler', '/markalar', '/rehber', '/iletisim', '/hakkimizda', '/kvkk', '/gizlilik-politikasi', '/kullanim-kosullari',
@@ -37,12 +38,22 @@ async function check({ locale, path }) {
   const text = visible(html);
   assert.match(html, new RegExp(`<html[^>]+lang="${locale}"`), `${url}: html language`);
   assert.ok(html.includes(`rel="canonical" href="https://www.antalyaklimaservisi.tr/${locale}${path}"`), `${url}: canonical`);
-  for (const language of locales) {
+  const districtService = path.match(/^\/antalya\/[^/]+\/hizmetler\/([^/]+)$/);
+  const localOnlyPage = Boolean(districtService);
+  const supportedAlternates = localOnlyPage ? ['tr'] : locales;
+  const segments = path.split('/').filter(Boolean);
+  const neighborhood = segments[0] === 'antalya' && segments.length === 3 && allDistricts.some(value => value.slug === segments[1]);
+  const featured = neighborhood && featuredNeighborhoods.some(value => value.district === segments[1] && value.slug === segments[2]);
+  for (const language of supportedAlternates) {
     assert.ok(html.includes(`hrefLang="${language}" href="https://www.antalyaklimaservisi.tr/${language}${path}"`), `${url}: alternate ${language}`);
-    assert.ok(html.includes(`href="/${language}${path}"`), `${url}: switch ${language}`);
+  }
+  for (const language of locales) {
+    const serviceTranslations = { 'klima-ariza-servisi': 'klima-ariza-tamiri', 'klima-bakim-servisi': 'klima-bakim-temizlik' };
+    const languagePath = language !== 'tr' && districtService ? `/hizmetler/${serviceTranslations[districtService[1]]}` : path;
+    assert.ok(html.includes(`href="/${language}${languagePath}"`), `${url}: switch ${language}`);
   }
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${url}: one heading`);
-  const combination = (path.startsWith('/antalya/') && path.split('/').length > 4) || path.includes('/hizmetler/klima-') && !path.startsWith('/hizmetler/');
+  const combination = (path.startsWith('/antalya/') && path.split('/').length > 4 && !districtService) || path.includes('/hizmetler/klima-') && !path.startsWith('/hizmetler/') && !districtService || (neighborhood && !featured) || (Boolean(districtService) && locale !== 'tr');
   assert.equal(/name="robots" content="[^"]*noindex/.test(html), combination, `${url}: index policy`);
   assert.ok(text.includes(copy[locale].request), `${url}: translated CTA`);
   const article = guides.find(value => path === `/rehber/${value.slug}`)?.[locale];

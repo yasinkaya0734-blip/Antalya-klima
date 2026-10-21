@@ -8,7 +8,10 @@ export default function LanguageSwitcher({ locale, fallbackPath }: { locale: Loc
   useEffect(() => { document.documentElement.lang = locale; }, [locale]);
   const path = usePathname().replace(/^\/(tr|en|de|ru)(?=\/|$)/, '');
   const brandDistrict = path.match(/^\/antalya\/[^/]+\/marka\/([^/]+)$/);
-  const translationPath = fallbackPath ?? (brandDistrict ? `/markalar/${brandDistrict[1]}` : undefined);
+  const districtService = path.match(/^\/antalya\/[^/]+\/hizmetler\/([^/]+)$/);
+  const serviceTranslations: Record<string, string> = { 'klima-ariza-servisi': 'klima-ariza-tamiri', 'klima-bakim-servisi': 'klima-bakim-temizlik' };
+  const serviceTranslation = districtService ? serviceTranslations[districtService[1]] : undefined;
+  const translationPath = fallbackPath ?? (brandDistrict ? `/markalar/${brandDistrict[1]}` : serviceTranslation ? `/hizmetler/${serviceTranslation}` : undefined);
   const pathForLanguage = (language: Locale) => language === 'tr'
     ? path
     : translationPath ?? (path.startsWith('/klima-ariza-kodlari') ? '/rehber/klima-ariza-kodlari-nasil-kontrol-edilir' : path);
