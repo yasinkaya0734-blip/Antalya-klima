@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "backup": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Create-ProjectBackup.ps1"
+    "backup": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Create-ProjectBackup.ps1",
+    "backup:hook": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Install-Backup-Hook.ps1"
   },
   "dependencies": {
     "next": "16.3.4",

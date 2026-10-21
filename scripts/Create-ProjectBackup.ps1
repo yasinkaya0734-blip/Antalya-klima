@@ -12,4 +12,11 @@ $items = Get-ChildItem -LiteralPath $projectRoot -Force |
   Where-Object { $excluded -notcontains $_.Name -and $_.Name -notlike '.env*' -and $_.Name -notlike '*token.local*' }
 
 Compress-Archive -LiteralPath $items.FullName -DestinationPath $archivePath -CompressionLevel Optimal -Force
+$archive = [System.IO.Compression.ZipFile]::OpenRead($archivePath)
+try {
+  if ($archive.Entries.Count -eq 0) { throw "Backup archive is empty: $archivePath" }
+}
+finally {
+  $archive.Dispose()
+}
 Write-Output "Backup created: $archivePath"
