@@ -36,7 +36,7 @@ async function worker() {
       assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
       const html = await response.text();
       const locale = path.split('/')[1];
-      assert.ok(html.includes(`<html lang="${locale}"`), 'HTML language');
+      assert.ok(new RegExp(`<html\\b[^>]*\\blang="${locale}"`).test(html), 'HTML language');
       assert.ok(html.includes(`rel="canonical" href="${url}"`), 'Canonical mismatch');
       assert.ok(!/name="robots" content="[^"]*noindex/.test(html), 'Noindex in sitemap');
       assert.equal((html.match(/<h1\b/g) ?? []).length, 1, 'One H1');
