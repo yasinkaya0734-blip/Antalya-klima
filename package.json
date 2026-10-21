@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "backup": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Create-ProjectBackup.ps1",
-    "backup:hook": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Install-Backup-Hook.ps1"
+    "backup:hook": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Install-Backup-Hook.ps1",
+    "deploy:production": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/Deploy-Vercel.ps1"
   },
   "dependencies": {
     "next": "16.3.4",

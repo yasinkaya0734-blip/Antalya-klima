@@ -26,10 +26,10 @@ const descriptions: Record<string, string> = {
 export function locationSeo(locale: Locale, district?: { slug: string; name: string }) {
   const place = district?.name ?? 'Antalya';
   const titles: Record<Locale, string> = {
-    tr: `${place} Klima Servisi | Bakım, Tamir ve Montaj`,
-    en: `${place} Air Conditioning Service | Repair & Maintenance`,
-    de: `${place} Klimaservice | Wartung und Reparatur`,
-    ru: `Сервис кондиционеров ${place} | Ремонт и обслуживание`,
+    tr: `${district ? `Antalya ${place}` : place} Klima Servisi | Kaya Teknik`,
+    en: `${place} Air Conditioning Service | Kaya Teknik`,
+    de: `${place} Klimaservice | Kaya Teknik`,
+    ru: `Сервис кондиционеров ${place} | Kaya Teknik`,
   };
   const text: Record<Locale, string> = {
     tr: district ? descriptions[district.slug] : 'Antalya klima servisi: 19 ilçede bakım, tamir ve montaj için Kaya Teknik. Mahallenizi seçin; güncel hizmet bedeli ve randevu için 0242 344 05 07’yi arayın.',

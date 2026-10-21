@@ -42,7 +42,7 @@ export function getDistrictService(locale: string, slug: string[]) {
   const service = districtServiceSlugs.find(value => value === slug[3]);
   if (!district || !service) return undefined;
   const maintenance = service === 'klima-bakim-servisi';
-  const title = `${district.name} Klima ${maintenance ? 'Bakım' : 'Arıza'} Servisi`;
+  const title = `Antalya ${district.name} Klima ${maintenance ? 'Bakım' : 'Arıza'} Servisi | Kaya Teknik`;
   const description = maintenance
     ? `${district.name} klima bakım servisi: filtre, iç ünite ve drenaj kontrolü. ${district.areas.slice(0, 2).join(' ve ')} çevresinde randevu: 0242 344 05 07.`
     : `${district.name} klima arıza servisi: soğutmama, su akıtma ve hata kodları için tespit ve onarım. Kapsam ve randevu için Kaya Teknik: 0242 344 05 07.`;

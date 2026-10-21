@@ -206,7 +206,7 @@ export const errorCodeBrands: BrandCodes[] = brands.map(brand => {
   return { brand, slug, groups: catalog[slug] ?? [], note: notes[slug] ?? 'Aşağıdaki açıklamalar yalnızca belirtilen kaynak ve seri kapsamındadır. Model eşleşmesi olmadan parça veya onarım kararı vermeyin.' };
 });
 export const errorCodeReviewDate = '2026-09-28';
-export const errorCodeTitle = 'Klima Arıza Kodları — Marka ve Model Rehberi';
+export const errorCodeTitle = 'Klima Arıza Kodları | Marka ve Model Rehberi';
 export const errorCodeDescription = '24 klima markası için arıza kodu rehberi. Model kapsamı, bilgi ve koruma göstergeleri; doğrulanamayan seriler için kılavuz yönlendirmesi.';
 export function resolveErrorPage(locale: string, slug: string[]) {
   if (locale !== 'tr' || slug[0] !== 'klima-ariza-kodlari' || slug.length > 2) return undefined;
