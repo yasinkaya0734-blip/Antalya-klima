@@ -11,6 +11,7 @@ export function proxy(request: NextRequest) {
   else if (legacyRoots.some(root => pathname === root || pathname.startsWith(root + '/'))) targetPath = '/tr' + pathname;
   targetPath = targetPath.replace(/^\/(tr|en|de|ru)\/gizlilik\/?$/, '/$1/gizlilik-politikasi');
   targetPath = targetPath.replace(/^(\/(?:tr|en|de|ru)\/antalya\/kepez\/)yeni-mahalle(?=\/|$)/, '$1yeni');
+  targetPath = targetPath.replace(/^\/tr\/markalar\/([^/]+)\/([^/]+)$/, '/tr/antalya/$2/marka/$1');
   if (host === 'antalyaklimaservisi.tr' || targetPath !== pathname) {
     const url = request.nextUrl.clone();
     if (host === 'antalyaklimaservisi.tr') {

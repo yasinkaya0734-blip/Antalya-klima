@@ -1,0 +1,39 @@
+name: Source backup
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the updated source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Create a clean source archive
+        env:
+          BACKUP_SHA: ${{ github.sha }}
+        run: |
+          git archive --format=zip --output="$RUNNER_TEMP/antalyaklimaservisi-${BACKUP_SHA}.zip" "$BACKUP_SHA" -- . \
+            ':(exclude).env*' \
+            ':(exclude)**/.env*' \
+            ':(exclude)**/*token.local*' \
+            ':(exclude).vercel/**' \
+            ':(exclude)**/.vercel/**' \
+            ':(exclude)backups/**' \
+            ':(exclude)**/node_modules/**'
+
+      - name: Keep the backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: antalyaklimaservisi-${{ github.sha }}
+          path: ${{ runner.temp }}/antalyaklimaservisi-${{ github.sha }}.zip
+          if-no-files-found: error
+          retention-days: 90

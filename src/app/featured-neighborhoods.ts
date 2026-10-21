@@ -54,7 +54,7 @@ export function neighborhoodSeo(district: string, slug: string) {
   if (!entry) return undefined;
   const districtName = allDistricts.find(item => item.slug === district)!.name;
   return {
-    title: `${entry.name} Klima Servisi | ${districtName} | Kaya Teknik`,
+    title: `Antalya ${districtName} ${entry.name} Klima Servisi | Kaya Teknik`,
     description: `${districtName} ${entry.name} klima servisi: bakım, tamir ve montaj. ${entry.focus} için cihaz bilgilerinizi paylaşın; Kaya Teknik ile randevuyu görüşün.`,
   };
 }
