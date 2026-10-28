@@ -1,0 +1,41 @@
+name: Backup after Vercel production deployment
+
+on:
+  repository_dispatch:
+    types:
+      - vercel.deployment.success
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    if: ${{ github.event.client_payload.environment == 'production' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the deployed source revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.git.sha }}
+          fetch-depth: 0
+
+      - name: Create a clean production source archive
+        env:
+          BACKUP_SHA: ${{ github.event.client_payload.git.sha }}
+        run: |
+          git archive --format=zip --output="$RUNNER_TEMP/antalyaklimaservisi-production-${BACKUP_SHA}.zip" "$BACKUP_SHA" -- . \
+            ':(exclude).env*' \
+            ':(exclude)**/.env*' \
+            ':(exclude)**/*token.local*' \
+            ':(exclude).vercel/**' \
+            ':(exclude)**/.vercel/**' \
+            ':(exclude)backups/**' \
+            ':(exclude)**/node_modules/**'
+
+      - name: Keep the production backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: antalyaklimaservisi-production-${{ github.event.client_payload.git.sha }}
+          path: ${{ runner.temp }}/antalyaklimaservisi-production-${{ github.event.client_payload.git.sha }}.zip
+          if-no-files-found: error
+          retention-days: 90
