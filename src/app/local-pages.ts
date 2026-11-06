@@ -78,7 +78,7 @@ export function resolveLocalPage(locale: Locale, slug: string[]): LocalPage | un
         : undefined
     : undefined;
   const suffixedBrandRoute = Boolean(suffixBrandSlug);
-  const bareBrandRoute = slug.length === 1 && !suffixedBrandRoute;
+  const bareBrandRoute = slug.length === 1 && !suffixedBrandRoute && slug[0] !== 'antalya';
   const shortBrandRoute = slug.length === 2 && (slug[1] === 'klima-servisi' || slug[1] === 'servisi');
   const antalyaBrandRoute = slug[0] === 'antalya' && slug.at(-1) === 'klima-servisi' && (slug.length === 3 || slug.length === 4);
   const districtSuffixedBrandRoute = slug[0] === 'antalya' && slug.length === 3 && slug[2].endsWith('-klima-servisi');
