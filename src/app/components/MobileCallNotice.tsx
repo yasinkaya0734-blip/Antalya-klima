@@ -1,10 +1,10 @@
 import type { Locale } from '../i18n';
 
 const messages = {
- tr: { title: '7/24 mobil çağrı hizmeti', text: 'Aynı gün servis için arayın; ziyaret zamanı randevuyla netleştirilir.' },
- en: { title: '24/7 mobile phone support', text: 'Call for same-day service; the visit time is confirmed when booking.' },
- de: { title: 'Mobiltelefonischer Kontakt rund um die Uhr', text: 'Rufen Sie für einen Service am selben Tag an; die Besuchszeit wird bei der Terminvereinbarung bestätigt.' },
- ru: { title: 'Круглосуточная мобильная линия', text: 'Позвоните для обслуживания в тот же день; время выезда подтверждается при записи.' },
+ tr: { title: '7/24 klima servis hattı', text: 'Tamir, bakım, montaj ve gaz dolumu taleplerinizi telefonla veya WhatsApp bilgi asistanından iletin. Aynı gün ziyaret, adres ve ekip uygunluğuna göre planlanır. Parça ve işçilik garanti koşulları işlem öncesinde yazılı olarak teyit edilir.' },
+ en: { title: '24/7 mobile service line', text: 'Request same-day service. Visits are scheduled after confirming the address and team availability. Parts and labour warranty terms are confirmed in writing before work begins.' },
+ de: { title: '24/7 mobile Service-Hotline', text: 'Fragen Sie einen Service am selben Tag an. Der Besuch wird nach Bestätigung von Adresse und Teamverfügbarkeit geplant. Garantiebedingungen für Teile und Arbeit werden vor Beginn schriftlich bestätigt.' },
+ ru: { title: 'Мобильная линия сервиса 24/7', text: 'Оставьте заявку на обслуживание в тот же день. Выезд планируется после подтверждения адреса и доступности команды. Условия гарантии на детали и работы подтверждаются письменно до начала работ.' },
 };
 export default function MobileCallNotice({ locale }: { locale: Locale }) {
  const t = messages[locale];

@@ -19,10 +19,10 @@ export const openingHours = [
 ];
 // Do not add ratings, coordinates or guarantees without verified facts.
 export const businessSchema = {
-  '@type': 'HVACBusiness', '@id': `${business.url}/#business`,
+  '@type': ['HVACBusiness', 'Organization'], '@id': `${business.url}/#business`,
   name: business.name, legalName: business.name, url: business.url, telephone: business.telephone,
   areaServed: { '@type': 'AdministrativeArea', name: 'Antalya', containedInPlace: { '@type': 'Country', name: 'Türkiye' } },
   openingHoursSpecification: openingHours.map(hours => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: hours.days.map(day => `https://schema.org/${day}`), opens: hours.opens, closes: hours.closes })),
-  image: `${business.url}/klima-salon-hero.webp`, logo: `${business.url}/kaya-teknik-logo.png`,
+  image: `${business.url}/klima-salon-hero.webp`, logo: `${business.url}/kaya-teknik-logo-square.png`,
   address: { '@type': 'PostalAddress', streetAddress: business.streetAddress, addressLocality: business.addressLocality, addressRegion: business.addressRegion, addressCountry: business.addressCountry, postalCode: business.postalCode },
 };

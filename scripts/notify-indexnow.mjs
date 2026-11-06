@@ -30,15 +30,19 @@ if (!keyResponse.ok || (await keyResponse.text()).trim() !== key) {
   throw new Error(`IndexNow verification key is not publicly readable: ${keyLocation}`);
 }
 
-const response = await fetch('https://api.indexnow.org/indexnow', {
-  method: 'POST',
-  headers: { 'content-type': 'application/json; charset=utf-8' },
-  body: JSON.stringify({ host, key, keyLocation, urlList: urls }),
-  signal: AbortSignal.timeout(30000),
-});
-if (response.status !== 200 && response.status !== 202) {
-  const detail = (await response.text()).slice(0, 500);
-  throw new Error(`IndexNow submission failed: HTTP ${response.status} ${detail}`);
+const batchSize = 10000;
+for (let offset = 0; offset < urls.length; offset += batchSize) {
+  const batch = urls.slice(offset, offset + batchSize);
+  const response = await fetch('https://api.indexnow.org/indexnow', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({ host, key, keyLocation, urlList: batch }),
+    signal: AbortSignal.timeout(30000),
+  });
+  if (response.status !== 200 && response.status !== 202) {
+    const detail = (await response.text()).slice(0, 500);
+    throw new Error(`IndexNow submission failed for batch ${Math.floor(offset / batchSize) + 1}: HTTP ${response.status} ${detail}`);
+  }
+  console.log(`IndexNow accepted batch ${Math.floor(offset / batchSize) + 1}: ${batch.length} URLs (HTTP ${response.status}).`);
 }
-
-console.log(`IndexNow accepted ${urls.length} sitemap URLs (HTTP ${response.status}).`);
+console.log(`IndexNow accepted ${urls.length} sitemap URLs in total.`);

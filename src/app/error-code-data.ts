@@ -208,10 +208,17 @@ export const errorCodeBrands: BrandCodes[] = brands.map(brand => {
 export const errorCodeReviewDate = '2026-09-28';
 export const errorCodeTitle = 'Klima Arıza Kodları | Marka ve Model Rehberi';
 export const errorCodeDescription = '24 klima markası için arıza kodu rehberi. Model kapsamı, bilgi ve koruma göstergeleri; doğrulanamayan seriler için kılavuz yönlendirmesi.';
+const localizedErrorCopy = {
+  tr: { hubTitle: errorCodeTitle, hubDescription: errorCodeDescription, title: (brand: string) => `${brand} Klima Arıza Kodları`, description: (brand: string, verified: boolean) => `${brand} klima arıza kodlarını model ve seri kapsamıyla inceleyin. ${verified ? 'Üretici kaynaklı açıklamalar ve güvenli servis yönlendirmesi.' : 'Doğru kılavuz eşleştirmesi için gerekli model bilgileri.'}` },
+  en: { hubTitle: 'Air Conditioner Error Codes | Brand and Model Guide', hubDescription: 'Error code guidance for 24 air conditioner brands, including model scope, information and protection indicators, and manual checks.', title: (brand: string) => `${brand} Air Conditioner Error Codes`, description: (brand: string, verified: boolean) => `Review ${brand} air conditioner codes with their model and series scope. ${verified ? 'Includes sourced explanations and service guidance.' : 'Check the exact model manual before interpreting a code.'}` },
+  de: { hubTitle: 'Klimaanlagen-Fehlercodes | Marken- und Modellratgeber', hubDescription: 'Hinweise zu Fehlercodes von 24 Klimaanlagenmarken mit Modellumfang, Informations- und Schutzanzeigen sowie Prüfung des Gerätehandbuchs.', title: (brand: string) => `${brand} Klimaanlagen-Fehlercodes`, description: (brand: string, verified: boolean) => `Prüfen Sie ${brand}-Fehlercodes im jeweiligen Modell- und Serienumfang. ${verified ? 'Mit belegten Erläuterungen und Servicehinweisen.' : 'Vor der Deutung das Handbuch des genauen Modells prüfen.'}` },
+  ru: { hubTitle: 'Коды ошибок кондиционеров | Руководство по маркам и моделям', hubDescription: 'Сведения о кодах ошибок 24 марок кондиционеров, области моделей, информационных и защитных индикаторах и проверке руководства устройства.', title: (brand: string) => `${brand}: коды ошибок кондиционеров`, description: (brand: string, verified: boolean) => `Коды ${brand} с указанием применимости к моделям и сериям. ${verified ? 'Проверенные пояснения и рекомендации по сервису.' : 'Перед трактовкой сверьтесь с руководством конкретной модели.'}` },
+} as const;
 export function resolveErrorPage(locale: string, slug: string[]) {
-  if (locale !== 'tr' || slug[0] !== 'klima-ariza-kodlari' || slug.length > 2) return undefined;
-  if (slug.length === 1) return { title: errorCodeTitle, description: errorCodeDescription, brand: undefined, indexable: true };
+  if (!Object.hasOwn(localizedErrorCopy, locale) || slug[0] !== 'klima-ariza-kodlari' || slug.length > 2) return undefined;
+  const copy = localizedErrorCopy[locale as keyof typeof localizedErrorCopy];
+  if (slug.length === 1) return { title: copy.hubTitle, description: copy.hubDescription, brand: undefined, indexable: true };
   const brand = errorCodeBrands.find(value => value.slug === slug[1]);
   if (!brand) return undefined;
-  return { title: `${brand.brand} Klima Arıza Kodları`, description: `${brand.brand} klima arıza kodlarını model ve seri kapsamıyla inceleyin. ${brand.groups.length ? 'Üretici kaynaklı açıklamalar ve güvenli servis yönlendirmesi.' : 'Doğru kılavuz eşleştirmesi için gerekli model bilgileri.'}`, brand, indexable: brand.groups.length > 0 };
+  return { title: copy.title(brand.brand), description: copy.description(brand.brand, brand.groups.length > 0), brand, indexable: brand.groups.length > 0 };
 }

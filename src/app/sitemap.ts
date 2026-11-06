@@ -6,6 +6,7 @@ import { getAntalyaNeighborhoods } from './antalya-neighborhoods';
 import { districtServiceCopy, districtServicePath, districtServiceSlugs } from './district-services';
 import { errorCodeBrands, errorCodeReviewDate } from './error-code-data';
 import { featuredNeighborhood } from './featured-neighborhoods';
+import { localBrandPaths, localOverviewPaths, localServicePaths } from './local-pages';
 
 const base = 'https://www.antalyaklimaservisi.tr';
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,10 +31,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const editorialPaths = [
     ...brands.flatMap(brand => allDistricts.map(district => `/antalya/${district.slug}/marka/${slugify(brand)}`)),
     ...Object.keys(districtServiceCopy).flatMap(district => districtServiceSlugs.map(service => districtServicePath(district, service))),
-    '/klima-ariza-kodlari',
-    ...errorCodeBrands.filter(brand => brand.groups.length > 0).map(brand => `/klima-ariza-kodlari/${brand.slug}`),
   ];
-  return [...existing, ...featuredNeighborhoodEntries, ...editorialPaths.map(path => ({
+  const generatedLocalPaths = [...localOverviewPaths(), ...localBrandPaths(), ...localServicePaths()];
+  const localizedLocalEntries = locales.flatMap(locale => generatedLocalPaths.map(path => ({
+    url: `${base}/${locale}${path}`,
+    alternates: { languages: Object.fromEntries([...locales.map(language => [language, `${base}/${language}${path}`]), ['x-default', `${base}/tr${path}`]]) },
+  })));
+  const localizedErrorPaths = locales.flatMap(locale => [
+    `/klima-ariza-kodlari`,
+    ...errorCodeBrands.filter(brand => brand.groups.length > 0).map(brand => `/klima-ariza-kodlari/${brand.slug}`),
+  ].map(path => ({
+    url: `${base}/${locale}${path}`,
+    ...(path.startsWith('/klima-ariza-kodlari') ? { lastModified: errorCodeReviewDate } : {}),
+    alternates: { languages: Object.fromEntries([...locales.map(language => [language, `${base}/${language}${path}`]), ['x-default', `${base}/tr${path}`]]) },
+  })));
+  return [...existing, ...localizedLocalEntries, ...localizedErrorPaths, ...featuredNeighborhoodEntries, ...editorialPaths.map(path => ({
     url: `${base}/tr${path}`,
     ...(path.startsWith('/klima-ariza-kodlari') ? { lastModified: errorCodeReviewDate } : {}),
     alternates: { languages: { tr: `${base}/tr${path}`, 'x-default': `${base}/tr${path}` } },

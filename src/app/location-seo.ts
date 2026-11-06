@@ -26,7 +26,7 @@ const descriptions: Record<string, string> = {
 export function locationSeo(locale: Locale, district?: { slug: string; name: string }) {
   const place = district?.name ?? 'Antalya';
   const titles: Record<Locale, string> = {
-    tr: `${district ? `Antalya ${place}` : place} Klima Servisi | Kaya Teknik`,
+    tr: `${district ? `Antalya ${place}` : place} Klima Servisi | 7/24 Klima Servis`,
     en: `${place} Air Conditioning Service | Kaya Teknik`,
     de: `${place} Klimaservice | Kaya Teknik`,
     ru: `Сервис кондиционеров ${place} | Kaya Teknik`,

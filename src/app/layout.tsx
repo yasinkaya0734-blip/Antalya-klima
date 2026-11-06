@@ -7,8 +7,9 @@ import './service-guides.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.antalyaklimaservisi.tr'),
-  title: { default: 'Antalya Klima Servisi | Kaya Teknik', template: '%s | Kaya Teknik' },
+  title: { default: 'Antalya Klima Servisi', template: '%s | Antalya' },
   description: 'Antalya’da klima arıza, bakım, montaj ve gaz dolumu hizmetleri. Kaya Teknik’e telefon veya WhatsApp ile ulaşın.',
+  icons: { icon: '/favicon.png', apple: '/favicon.png' },
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
