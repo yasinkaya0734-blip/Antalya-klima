@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 10402)
+Total output lines: 272
+
 import type { Metadata } from 'next';
 import { getDistrictService } from '../../district-services';
 import { resolveErrorPage } from '../../error-code-data';
@@ -78,163 +81,7 @@ async function resolvePage(locale: Locale, slug: string[]) {
     if (locale === 'tr' && section === 'markalar') title = 'Antalya Klima Markaları';
     if (section === 'hizmetler') description = ({ tr: 'Antalya klima arıza, bakım, temizlik, montaj ve gaz hizmetleri. İşlem kapsamını cihazınıza ve talep türüne göre Kaya Teknik ile görüşün.', en: 'Air conditioner repair, maintenance, cleaning, installation and refrigerant services in Antalya. Discuss the work needed for your unit with Kaya Teknik.', de: 'Reparatur, Wartung, Reinigung, Montage und Kältemittelservice für Klimaanlagen in Antalya. Klären Sie den passenden Umfang mit Kaya Teknik.', ru: 'Ремонт, обслуживание, чистка, монтаж и работы с хладагентом в Анталье. Уточните подходящий объём услуг для вашего устройства у Kaya Teknik.' })[locale];
     if (section === 'ilceler') description = ({ tr: 'Antalya’nın 19 ilçesindeki klima servis bölgelerini inceleyin. İlçe ve mahalle seçerek hizmet kapsamı ile randevu uygunluğunu öğrenin.', en: 'Explore air conditioner service areas across Antalya’s 19 districts. Choose a district and neighbourhood to check service and appointment availability.', de: 'Entdecken Sie Klimaservicegebiete in allen 19 Bezirken Antalyas. Wählen Sie Bezirk und Stadtviertel, um Leistungen und Termine zu prüfen.', ru: 'Районы обслуживания кондиционеров во всех 19 районах Антальи. Выберите район и микрорайон, чтобы уточнить услуги и время визита.' })[locale];
-    if (section === 'markalar') description = ({ tr: 'Sitede listelenen klima markalarında arıza, bakım ve montaj bilgileri. Marka ve model bilgisiyle cihazınıza uygun servis kapsamını öğrenin.', en: 'Find repair, maintenance and installation information for the air conditioner brands listed here. Share your model to discuss suitable service.', de: 'Informationen zu Reparatur, Wartung und Montage der hier aufgeführten Klimaanlagenmarken. Teilen Sie Ihr Modell für eine passende Einschätzung mit.', ru: 'Информация о ремонте, обслуживании и монтаже перечисленных марок кондиционеров. Сообщите модель, чтобы уточнить подходящую услугу.' })[locale];
-    if (legalPaths.includes(section)) description = legalParagraphs(locale, section)[0];
-    if (section === 'rehber') description = t.guideIntro;
-    if (section === 'hakkimizda') description = information[locale].aboutText[0];
-    if (section === 'gizlilik') description = information[locale].privacyText[0];
-    if (section === 'iletisim') description = business.displayAddress + '. ' + information[locale].contactText;
-  }
-  else if (section === 'hizmetler' && slug.length === 2 && serviceIndex >= 0) { title = locale === 'tr' ? `Antalya | ${t.serviceTitles[serviceIndex]}` : `${t.serviceTitles[serviceIndex]} | Antalya`; description = t.serviceTexts[serviceIndex]; }
-  else if (section === 'ilceler' && slug.length === 2 && district) { title = areaTitle(locale, place); description = `${district.name}: ${t.areaIntro}`; }
-  else if (section === 'markalar' && slug.length === 2 && brand) { title = areaTitle(locale, place); description = `${brand}: ${t.brandIntro}`; }
-  else if (districtBrandRoute && brand && district) { title = `Antalya ${district.name} ${brand} Klima Servisi | 7/24 Klima Servis Hattı`; description = brandDistrictDescription(brand, district.name); }
-  else if (section === 'rehber' && slug.length === 2 && guide) { title = guide[locale].title; description = guide[locale].intro; }
-  else if (section === 'antalya' && district && neighborhood && (slug.length === 3 || (slug.length === 4 && brand && slug[3].endsWith('-klima-servisi')))) { title = areaTitle(locale, place); description = `${place}: ${t.areaIntro}`; }
-  else notFound();
-  if (locale === 'tr' && section === 'markalar' && brand && !isLanding) {
-    title = district ? `${brand} Klima Servisi ${district.name} | Antalya` : `${brand} Klima Servisi | Antalya`;
-    description = brandDistrictDescription(brand, district?.name);
-  }
-  if (locale === 'tr' && district && neighborhood && !brand && !isLanding) {
-    const seo = neighborhoodSeo(district.slug, neighborhood.slug);
-    if (seo) { title = `${district.name} ${neighborhood.name} Klima Servisi | Tamir Bakım Montaj`; description = seo.description; }
-  }
-  return { localPage: undefined, districtService, errorPage, section, item, neighborhoods, district, neighborhood, brand, districtBrandRoute, serviceIndex, guide, landingIndex, isLanding, place, title: locale === 'tr' ? normalizeTurkishTitle(title, brand) : title, description };
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, slug = [] } = await params;
-  if (!isLocale(locale)) notFound();
-  const page = await resolvePage(locale, slug);
-  const path = slug.length ? `/${slug.join('/')}` : '';
-  const brandDistrictPage = Boolean(page.brand && page.district && (page.section === 'markalar' || (page.section === 'antalya' && (slug[2] === 'marka' || slug.at(-2) === 'klima'))));
-  const neighborhoodPage = page.section === 'antalya' && Boolean(page.district && page.neighborhood && !page.brand && !page.isLanding);
-  const indexableNeighborhood = neighborhoodPage && locale === 'tr' && Boolean(featuredNeighborhood(page.district?.slug, page.neighborhood?.slug));
-  const isCombination = !page.localPage && ((page.isLanding && !page.districtService) || (page.section === 'antalya' && Boolean(page.brand) && !brandDistrictPage) || (neighborhoodPage && !indexableNeighborhood) || (page.errorPage && !page.errorPage.indexable));
-  const languages = page.localPage || page.errorPage ? Object.fromEntries([...locales.map(language => [language, `/${language}${path}`]), ['x-default', `/tr${path}`]]) : page.districtService || brandDistrictPage ? { tr: `/tr${path}`, 'x-default': `/tr${path}` } : Object.fromEntries([...locales.map(language => [language, `/${language}${path}`]), ['x-default', `/tr${path}`]]);
-  const location = !page.section || (page.section === 'ilceler' && page.district) ? locationSeo(locale, page.district) : locale === 'tr' && page.district && page.neighborhood && !page.brand && !page.isLanding ? neighborhoodSeo(page.district.slug, page.neighborhood.slug) : undefined;
-  const ogLocales = { tr: 'tr_TR', en: 'en_GB', de: 'de_DE', ru: 'ru_RU' };
-  const rawTitle = location?.title ?? page.title;
-  const title = locale === 'tr' && !page.localPage && page.brand && page.district
-    ? `${page.brand} Klima Servisi ${page.district.name} | Hızlı Mobil Destek`
-    : locale === 'tr' && !page.localPage && page.brand
-      ? `${page.brand} Klima Servisi | Antalya Klima Servisi`
-      : locale === 'tr' && page.districtService && page.district
-        ? `${page.districtService.title.replace(/^Antalya\s+/i, '').replace(/\s*\|\s*Kaya Teknik$/i, '')} | Antalya`
-        : locale === 'tr' && page.section === 'ilceler' && page.district
-          ? `Klima Servisi ${page.district.name} | Antalya Klima Servisi`
-          : locale === 'tr' && page.section === 'antalya' && page.district && page.neighborhood && !page.isLanding
-            ? `${page.neighborhood.name} Klima Servisi ${page.district.name} | Antalya`
-            : rawTitle.replace(/\s*[—–]\s*/g, ' | ').replace(/\s*\|\s*Kaya Teknik$/i, '').replace(/\s*\|\s*\|\s*/g, ' | ').trim();
-  const finalTitle = locale === 'tr' ? normalizeTurkishTitle(title, page.brand) : title;
-  return {
-    title: { absolute: finalTitle }, description: location?.description ?? page.description,
-    robots: isCombination ? { index: false, follow: true } : { index: true, follow: true, googleBot: { 'max-image-preview': 'large' } },
-    alternates: { canonical: `/${locale}${path}`, languages },
-    openGraph: { title: finalTitle, description: location?.description ?? page.description, url: `/${locale}${path}`, images: [{ url: '/klima-salon-hero.webp', alt: copy[locale].sub }], locale: ogLocales[locale], alternateLocale: page.districtService ? [] : locales.filter(value => value !== locale).map(value => ogLocales[value]) },
-  };
-}
-
-function Cta({ locale }: { locale: Locale }) {
-  const t = copy[locale];
-  return <section className="cta"><h2>{t.request}</h2><MobileCallNotice locale={locale}/><p>{t.requestText}</p><div className="actions"><a className="btn primary" href="tel:+902423440507">{t.call}: 0242 344 05 07</a><a className="btn" href="tel:+905382310734">{t.mobile}: +90 538 231 07 34</a><a className="btn" href={`https://wa.me/905382310734?text=${encodeURIComponent(`${t.whatsappIntro} ${t.sub}`)}`} target="_blank" rel="noreferrer">{t.whatsapp}</a></div></section>;
-}
-
-function Layout({ locale, children }: { locale: Locale; children: React.ReactNode }) {
-  const t = copy[locale];
-  return <><a className="skip-link" href="#main-content">{information[locale].skip}</a><div className="top"><div className="wrap"><span>{t.sub}</span><span>☎ 0242 344 05 07</span></div></div><header className="header"><LanguageSwitcher locale={locale}/><div className="wrap"><Link className="brand brand-logo" href={`/${locale}`}><span className="brand-mark"><Image src="/kaya-teknik-logo.png" alt="Kaya Teknik Servis, Klima Servisi" width={1678} height={937} sizes="(max-width: 760px) 240px, 350px"/></span></Link><nav className="nav">{[['hizmetler', t.services], ['ilceler', t.areas], ['markalar', t.brands], ['rehber', t.guides], ['klima-ariza-kodlari', locale === 'tr' ? 'Arıza Kodları' : t.errorGuide], ['iletisim', t.contact]].map(([path, label]) => <Link href={`/${locale}/${path}`} key={path}>{label}</Link>)}</nav></div></header>{children}<footer className="footer"><div className="wrap"><strong>{t.brand}</strong><p>{t.sub}</p><p>☎ 0242 344 05 07 · WhatsApp: +90 538 231 07 34</p><p>{t.independent}</p><address>{business.displayAddress}</address><nav className="footer-links"><Link href={`/${locale}/hakkimizda`}>{information[locale].about}</Link><Link href={`/${locale}/gizlilik-politikasi`}>{information[locale].privacy}</Link><Link href={`/${locale}/iletisim`}>{t.contact}</Link></nav><LegalFooter locale={locale}/></div></footer></>;
-}
-
-function ServiceCards({ locale, withImages = false }: { locale: Locale; withImages?: boolean }) {
-  const t = copy[locale];
-  return <div className="grid">{services.map((service, index) => <Link className={`card${withImages ? ' image-card' : ''}`} href={`/${locale}/hizmetler/${service.slug}`} key={service.slug}>{withImages && <Image src={images[index]} alt={t.serviceTitles[index]} width={768} height={432} sizes="(max-width: 760px) 100vw, 360px"/>}<h3>{t.serviceTitles[index]}</h3><p>{t.serviceTexts[index]}</p></Link>)}</div>;
-}
-
-function BrandDistrictServiceContent({ brand, district }: { brand: string; district: (typeof allDistricts)[number] }) {
-  const localNote = brandDistrictPlanningNote(district.slug);
-  return <section className="local-service-content" aria-label={`${district.name} ${brand} klima servis bilgileri`}>
-    <p className="lead">Antalya {district.name} ilçesinde {brand} klima arıza tespiti, bakım, temizlik, montaj ve tamir talepleri için Kaya Teknik’ten bağımsız özel servis bilgisi alın. Randevu uygunluğu adres ve talebin kapsamı teyit edilerek belirlenir.</p>
-    <h2>{district.name} {brand} klima arıza tespiti</h2>
-    <p>{pageEditorial({ brand })} {brand} cihazın tam model bilgisi, görülen belirti ve sorunun başlama zamanı birlikte değerlendirilir. Ekranda hata kodu varsa kodun tamamını paylaşın; tek bir belirti veya kod üzerinden işlem sonucu varsayılmaz.</p>
-    <h2>{district.name} genelinde bakım ve temizlik</h2>
-    <p>{localNote} Bakım talebinde filtre, iç ünite, hava akışı ve su tahliyesi cihazın durumuna göre incelenir. Son bakım zamanı ve kullanım yoğunluğu, önerilecek bakım kapsamının açıklanmasına yardımcı olur.</p>
-    <h2>{brand} klima montajı ve tamir süreci</h2>
-    <p>{district.name} adresindeki {brand} klima için montaj veya yer değişimi talebinde iç ünite ve dış ünite konumu, tesisat güzergâhı ve drenaj çıkışı değerlendirilir. Tamir gerekiyorsa arıza tespitinden sonra yapılacak işlem ve varsa parça ihtiyacı açıklanır; onayınız alınmadan ek işlem planlanmaz.</p>
-    <h2>{district.name} {brand} klima servisi randevusu</h2>
-    <p>Talebinize mahalle ve açık adresi, cihaz modelini, cihaz sayısını ve tercih ettiğiniz hizmeti ekleyin. Dış üniteye erişim, bina/site giriş şartı veya uygun çalışma saati varsa önceden belirtin. Güncel ücret ve ziyaret koşullarını işlem başlamadan önce teyit edin.</p>
-    <p><Link href={`/tr/markalar/${slugify(brand)}`}>Antalya {brand} klima servisi</Link> · <Link href={`/tr/ilceler/${district.slug}`}>{district.name} klima servisi</Link></p>
-    <h2>Diğer ilçelerde {brand} klima servisi</h2>
-    <div className="local-area-links">{allDistricts.filter(item => item.slug !== district.slug).map(item => <Link key={item.slug} href={`/tr/antalya/${item.slug}/marka/${slugify(brand)}`}>{item.name} {brand} klima servisi</Link>)}</div>
-  </section>;
-}
-
-function DistrictCards({ locale, priority = false, withLandmarks = false, other = false }: { locale: Locale; priority?: boolean; withLandmarks?: boolean; other?: boolean }) {
-  const t = copy[locale];
-  return <div className="grid">{(priority ? priorityDistricts : other ? allDistricts.filter(district => !priorityDistricts.some(value => value.slug === district.slug)) : allDistricts).map(district => withLandmarks ? <DistrictLandmarkCard key={district.slug} locale={locale} district={district}/> : <Link className="card" href={`/${locale}/ilceler/${district.slug}`} key={district.slug}><h3>{areaTitle(locale, `Antalya ${district.name}`)}</h3><p>{t.areaIntro}</p></Link>)}</div>;
-}
-
-function Faq({ locale, parts = false }: { locale: Locale; parts?: boolean }) {
-  const t = copy[locale];
-  return <section className="faq"><h2>{t.faq}</h2>{(parts ? t.partsFaq : t.faqItems).map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</section>;
-}
-
-export default async function LocalizedPage({ params, searchParams }: Props) {
-  const { locale, slug = [] } = await params;
-  if (!isLocale(locale)) notFound();
-  const t = copy[locale];
-  const page = await resolvePage(locale, slug);
-  const { section, item, district, neighborhood, brand, districtBrandRoute, serviceIndex, guide, isLanding, landingIndex } = page;
-  const guideImage = guide ? ['/klima-bakim.webp', '/klima-ariza-tamir.webp', '/klima-ariza-tamir.webp', '/klima-montaj.webp', '/klima-ariza-kodlari-rehberi.webp'][guides.findIndex(value => value.slug === guide.slug)] : undefined;
-  const pageImage = guideImage ?? (serviceIndex >= 0 ? images[serviceIndex] : page.errorPage ? '/klima-ariza-kodlari-rehberi.webp' : undefined);
-  const pageImageAlt = guide ? guide[locale].title : serviceIndex >= 0 ? t.serviceTitles[serviceIndex] : page.errorPage ? t.errorHeading : undefined;
-  const overviewImage = !pageImage && !district && section !== 'gizlilik' && !legalPaths.includes(section ?? '')
-    ? section === 'ilceler' || section === 'antalya' || page.localPage?.kind === 'overview' ? '/klima-salon-hero.webp'
-      : section === 'markalar' || page.localPage?.kind === 'brand-service' ? '/klima-ariza-tamir.webp'
-        : section === 'hizmetler' ? '/klima-bakim.webp'
-          : section === 'rehber' ? '/klima-ariza-kodlari-rehberi.webp'
-            : section === 'iletisim' || section === 'hakkimizda' ? '/klima-salon-hero.webp' : undefined
-    : undefined;
-  const overviewImageAlt = overviewImage
-    ? ({
-      tr: section === 'ilceler' || section === 'antalya' || section === 'iletisim' || section === 'hakkimizda' ? 'Yaşam alanındaki duvar tipi klima iç ünitesi' : section === 'hizmetler' ? 'Klima bakımında filtre ve iç ünite temizliği' : section === 'rehber' ? 'Klima arıza kodunu kontrol eden teknisyen' : 'Klima arıza tespiti için dış üniteyi kontrol eden teknisyen',
-      en: section === 'ilceler' || section === 'antalya' || section === 'iletisim' || section === 'hakkimizda' ? 'Wall mounted air conditioner in a living room' : section === 'hizmetler' ? 'Air conditioner filter and indoor unit maintenance' : section === 'rehber' ? 'Technician checking an air conditioner error code' : 'Technician inspecting an outdoor unit to diagnose a fault',
-      de: section === 'ilceler' || section === 'antalya' || section === 'iletisim' || section === 'hakkimizda' ? 'Wandklimagerät in einem Wohnraum' : section === 'hizmetler' ? 'Wartung von Klimafilter und Innengerät' : section === 'rehber' ? 'Techniker prüft einen Fehlercode der Klimaanlage' : 'Techniker prüft das Außengerät zur Fehlerdiagnose',
-      ru: section === 'ilceler' || section === 'antalya' || section === 'iletisim' || section === 'hakkimizda' ? 'Настенный кондиционер в жилом помещении' : section === 'hizmetler' ? 'Обслуживание фильтра и внутреннего блока кондиционера' : section === 'rehber' ? 'Специалист проверяет код ошибки кондиционера' : 'Специалист проверяет наружный блок для диагностики неисправности',
-    })[locale]
-    : undefined;
-  const query = await searchParams;
-  const selectedNeighborhood = page.neighborhoods.find(value => value.district === district?.slug && value.name === query.mahalle);
-  const selectedBrand = brands.includes(query.marka ?? '') ? query.marka : undefined;
-  if (!section) {
-    const structuredData = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebSite', name: t.brand, url: `${base}/${locale}`, inLanguage: locale }, businessSchema] };
-    return <Layout locale={locale}><main id="main-content"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}/><section className="hero"><div className="wrap"><div className="eyebrow">{t.brand}</div><h1>{t.hero}</h1><Image className="page-lead-image home-lead-image" src="/klima-salon-hero.webp" alt={({ tr: 'Antalya’da bir yaşam alanında klima iç ünitesi', en: 'Air conditioner indoor unit in an Antalya home', de: 'Klimainnengerät in einem Wohnraum in Antalya', ru: 'Внутренний блок кондиционера в жилом помещении в Анталье' })[locale]} width={1600} height={900} sizes="(max-width: 760px) calc(100vw - 32px), 1120px" preload/><p>{t.intro}</p><div className="actions"><a className="btn primary" href="tel:+902423440507">{t.call}: 0242 344 05 07</a><a className="btn" href={`https://wa.me/905382310734?text=${encodeURIComponent(`${t.whatsappIntro} ${t.sub}`)}`} target="_blank" rel="noreferrer">{t.whatsapp}</a></div></div></section><section className="section"><div className="wrap"><h2>{t.services}</h2><ServiceCards locale={locale} withImages/></div></section><section className="section tint"><div className="wrap"><h2>{t.priority}</h2><DistrictCards locale={locale} priority/><p><Link className="btn" href={`/${locale}/ilceler`}>{t.allAreas}</Link></p>{locale === 'tr' && <><h2>İlçenize özel arıza ve bakım servisi</h2><DistrictServiceLinks/></>}</div></section><section className="section"><div className="wrap"><h2>{t.process}</h2><ol className="service-checklist">{t.steps.map(step => <li key={step}>{step}</li>)}</ol><p>{t.availability}</p><Link className="btn" href={`/${locale}/hakkimizda`}>{information[locale].about}</Link><Faq locale={locale}/></div></section><section className="section tint"><div className="wrap"><h2>{t.guides}</h2><p className="lead">{t.guideIntro}</p><div className="grid">{guides.map(value => <Link className="card" href={`/${locale}/rehber/${value.slug}`} key={value.slug}><h3>{value[locale].title}</h3><p>{value[locale].intro}</p></Link>)}</div></div></section><section className="section"><div className="wrap"><Cta locale={locale}/></div></section></main></Layout>;
-  }
-
-  // Link to indexable brand hubs rather than multiplying noindex neighborhood/brand URLs.
-  // Existing combination pages remain available to direct visitors and the request tools.
-  const brandCards = () => <div className="grid brand-service-grid">{brands.map(value => <Link className="card" href={`/${locale}/markalar/${slugify(value)}`} key={value}><h3>{areaTitle(locale, `${value} Antalya`)}</h3><p>{t.brandIntro}</p></Link>)}</div>;
-  const errorNote = <><h2>{t.errorHeading}</h2><p>{t.errorNote}</p><p><Link className="btn" href={`/${locale}/klima-ariza-kodlari${brand ? '/' + slugify(brand) : ''}`}>{locale === 'tr' ? `${brand ? brand + ' ' : ''}Klima arıza kodları` : t.errorGuide}</Link></p></>;
-  const process = <><h2>{t.process}</h2><ol className="list">{t.steps.map(step => <li key={step}>{step}</li>)}</ol><p>{t.availability}</p></>;
-  let content: React.ReactNode;
-  if (page.localPage) {
-    content = page.localPage.paragraphs.map((paragraph, index) => <p className={index === 0 ? 'lead' : undefined} key={paragraph}>{paragraph}</p>);
-    if (page.localPage.kind === 'brand-service') content = <>{content}<h2>{page.localPage.brand} {t.errorHeading}</h2><p>{t.errorNote}</p><h2>{t.services}</h2><p>{t.serviceTexts[0]} {t.serviceTexts[1]} {t.serviceTexts[2]} {t.serviceTexts[3]}</p></>;
-    else if (page.localPage.kind === 'service-landing') content = <>{content}<h2>{t.evaluation}</h2><p>{t.evaluationText}</p><h2>{t.process}</h2><ol className="list">{t.steps.map(step => <li key={step}>{step}</li>)}</ol><h2>{t.related}</h2><ServiceCards locale={locale}/></>;
-    else content = <>{content}<h2>{t.allBrands}</h2><div className="grid">{brands.map(value => <Link className="card" href={`/${locale}/antalya/${page.localPage?.districtSlug ? `${page.localPage.districtSlug}/` : ''}${slugify(value)}/klima/servis`} key={value}><h3>{page.localPage?.place} {value} {t.service}</h3><p>{t.brandIntro}</p></Link>)}</div>{district && <><h2>{t.areas}</h2><DistrictCards locale={locale}/></>}</>;
-  } else if (page.districtService) {
-    content = <DistrictServiceContent page={page.districtService}/>;
-  } else if (page.errorPage) {
-    content = <ErrorCodeContent brand={page.errorPage.brand} locale={locale}/>;
-  } else if (isLanding) {
-    const relatedIndex = landingIndex === 3 ? 0 : landingIndex;
-    const related = neighborhood ? brands.slice(0, 8).map(value => ({ name: value, path: `markalar/${slugify(value)}` })) : district ? page.neighborhoods.filter(value => value.district === district.slug).map(value => ({ name: `${district.name} ${value.name}`, path: `antalya/${district.slug}/${value.slug}` })) : priorityDistricts.map(value => ({ name: value.name, path: `antalya/${value.slug}` }));
-    content = <><p className="lead">{page.place}: {t.serviceTexts[relatedIndex]}</p><h2>{t.scope}</h2><p>{t.evaluationText}</p>{process}<h2>{t.areas}</h2><div className="grid">{related.map(value => <Link className="card" href={`/${locale}/${value.path}/hizmetler/${landingSlugs[landingIndex]}`} key={value.path}><h3>{t.landingTitles[landingIndex]} | {value.name}</h3><p>{t.serviceTexts[relatedIndex]}</p></Link>)}</div><Faq locale={locale}/></>;
-  } else if (section === 'hizmetler') {
-    const parts = serviceIndex === 4;
-    content = item ? <><p className="lead">{t.serviceTexts[serviceIndex]}</p>{information[locale].serviceDetails[serviceIndex].map((paragraph, index) => <div key={paragraph}>{serviceIndex === 3 && index === 2 && <h2>{({ tr: 'Klima gazı nasıl doldurulur? Vakumlama neden şart?', en: 'How is refrigerant charged, and why is evacuation needed?', de: 'Wie wird Kältemittel eingefüllt und warum ist Evakuieren nötig?', ru: 'Как заправляют кондиционер и зачем нужно вакуумирование?' })[locale]}</h2>}<p>{paragraph}</p></div>)}{parts ? <><h2>{t.partsHeading}</h2><p>{t.partsText}</p><h2>{t.retailHeading}</h2><p>{t.retailText}</p><p className="notice">{t.partsNotice}</p></> : <><h2>{t.scope}</h2><p>{t.evaluationText}</p>{errorNote}</>}{process}<Faq locale={locale} parts={parts}/></> : <><p className="lead">{t.intro}</p><ServiceCards locale={locale}/><h2>{t.allBrands}</h2>{brandCards()}</>;
-  } else if (section === 'ilceler') {
-    content = district ? <><p className="lead">{locationSeo(locale, district).description}</p>{(selectedNeighborhood || selectedBrand) && <p>{[selectedNeighborhood?.name, selectedBrand].filter(Boolean).join(' · ')}</p>}<h2>{t.evaluation}</h2><p>{t.evaluationText}</p><h2>{t.services}</h2>{locale === 'tr' && <DistrictServiceLinks district={district.slug}/>}<ServiceCards locale={locale}/>{locale === 'tr' && <FeaturedAreaLinks district={district.slug}/>}<h2>{t.neighborhoodHeading}</h2><p>{t.neighborhoodIntro}</p><div className="grid">{page.neighborhoods.filter(value => value.district === district.slug).map(value => <Link className="card" href={`/${locale}/antalya/${district.slug}/${value.slug}`} key={value.slug}><h3>{areaTitle(locale, `${district.name} ${value.name}`)}</h3><p>{t.areaIntro}</p></Link>)}</div>{errorNote}</> : <><p className="lead">{t.intro}</p><LandmarkIntro locale={locale}/><h2>{t.priority}</h2><DistrictCards locale={locale} priority withLandmarks/><h2>{t.moreAreas}</h2><DistrictCards locale={locale} other withLandmarks/></>;
+    if (section === 'markalar') description = ({ tr: 'Sitede listelenen klima markalarında arıza, bakım ve montaj bilgileri. Marka ve model bilgisiyle cihazınıza uygun servis kapsamını öğrenin.', en: 'Find repair, maintenance and installation information for the air conditioner brands listed here. Share your model to discuss suitable service.', de: 'Informationen zu Reparatur, Wartung und Montage der hier aufgeführten Klimaanlagenmarken. Teilen Sie Ihr Modell für eine passende Einschätzung mit.', ru: 'Информация о ремо…5902 tokens truncated…ad">{t.intro}</p><LandmarkIntro locale={locale}/><h2>{t.priority}</h2><DistrictCards locale={locale} priority withLandmarks/><h2>{t.moreAreas}</h2><DistrictCards locale={locale} other withLandmarks/></>;
   } else if (section === 'markalar') {
     content = brand ? <>{district ? <BrandDistrictServiceContent brand={brand} district={district}/> : <><p className="lead">{brand}: {t.brandIntro}</p>{locale === 'tr' && <BrandServiceContent brand={brand}/>}<h2>{t.evaluation}</h2><p>{t.evaluationText}</p>{errorNote}{locale === 'tr' && <><h2>İlçeye göre {brand} klima servisi</h2><div className="grid">{allDistricts.map(value => <Link className="card" href={`/tr/antalya/${value.slug}/marka/${slugify(brand)}`} key={value.slug}><h3>{value.name} {brand} Klima Servisi</h3><p>{value.name} ilçesinde {brand} klima bakım, arıza tespiti, montaj ve tamir talebi.</p></Link>)}</div></>}<h2>{t.related}</h2><ServiceCards locale={locale}/></>}</> : <><p className="lead">{t.independent}</p>{brandCards()}</>;
   } else if (districtBrandRoute && district && brand) {
@@ -269,3 +116,4 @@ export default async function LocalizedPage({ params, searchParams }: Props) {
   const structured = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
   return <Layout locale={locale}><main id="main-content" className="article"><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structured }}/><div className="wrap"><nav className="crumb" aria-label={{ tr: 'Sayfa yolu', en: 'Breadcrumb', de: 'Seitenpfad', ru: 'Навигационная цепочка' }[locale]}>{crumbs.map((crumb, index) => <span key={crumb.url}>{index > 0 && ' / '}{index === crumbs.length - 1 ? <span aria-current="page">{crumb.name}</span> : <Link href={crumb.url.replace(base, '')}>{crumb.name}</Link>}</span>)}</nav><h1>{page.title}</h1>{pageImage && pageImageAlt && <Image className="page-lead-image" src={pageImage} alt={pageImageAlt} width={1120} height={630} sizes="(max-width: 760px) calc(100vw - 32px), 1120px" loading="eager"/>}{!pageImage && overviewImage && overviewImageAlt && <Image className="page-lead-image" src={overviewImage} alt={overviewImageAlt} width={1120} height={630} sizes="(max-width: 760px) calc(100vw - 32px), 1120px" loading="eager"/>}{district && <DistrictLandmarkFeature locale={locale} district={district} />}{locale === 'tr' && !page.districtService && (district || brand || isLanding) && !(section === 'markalar' && brand) && !districtBrandRoute && !(district && neighborhood && !brand && featuredNeighborhood(district.slug, neighborhood.slug)) && <p>{pageEditorial({ brand, district: district?.name, neighborhood: neighborhood?.slug, neighborhoodName: neighborhood?.name })}</p>}{locale === 'tr' && brand && district && neighborhood && <p>{brandNeighborhoodNote(brand, district.name, neighborhood.name)}</p>}{content}{locale === 'tr' && section === 'markalar' && brand === 'Copa' && <p className="notice">Bu site ve copaservisi.com, Kaya Teknik tarafından işletilmektedir. Copa cihazlara yönelik hizmetlerimiz için Antalya Copa Servisi (copaservisi.com/tr/bolge/antalya/copa) sayfamızda bilgi bulunmaktadır.</p>}{(section === 'iletisim' || section === 'hakkimizda') && <OpeningHours locale={locale}/>} {(section === 'iletisim' || district || (section === 'markalar' && brand)) && <RequestPlanner key={[locale, ...slug, selectedNeighborhood?.name, selectedBrand].join('/')} locale={locale} initialDistrict={district?.name} initialNeighborhood={neighborhood?.name ?? selectedNeighborhood?.name} initialBrand={brand ?? selectedBrand}/>} {section !== 'gizlilik' && !legalPaths.includes(section) && <section className="pricing-note"><h2>{information[locale].pricing}</h2><p>{information[locale].pricingText}</p></section>}<p className="notice">{t.independent}</p><Cta locale={locale}/></div></main></Layout>;
 }
+
